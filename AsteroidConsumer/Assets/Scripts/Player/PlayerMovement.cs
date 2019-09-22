@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour
+{
 
     public Rigidbody2D rb;
     public Rigidbody2D hook;
@@ -14,13 +15,17 @@ public class PlayerMovement : MonoBehaviour {
 
     private bool canInteract = true;
     private bool isPressed = false;
+    private bool realeaseCanInteract = false;
 
-    private bool isRunOnce=true;
     private SpringJoint2D springJoint2D;
 
     public float forceMultypuer;
 
     public Vector2 showVector2;
+
+    #region Dreving aim and circle
+    LineRenderer circle;
+    #endregion
 
     private void Start()
     {
@@ -40,20 +45,24 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+
     void OnMouseDown()
+    {
+        Pressed();
+    }
+
+
+    public void Pressed()
     {
         if (canInteract)
         {
-            if (isRunOnce)
-            {
-                RemoveFoece();
-                print("isRunOnce");
-                isRunOnce = false;
-                hook.transform.position = gameObject.transform.position;
-                springJoint2D.connectedAnchor = hook.transform.position;
-                springJoint2D.enabled = true;
-                this.enabled = true;
-            }
+            realeaseCanInteract = true;
+            hook.transform.position = gameObject.transform.position;
+            springJoint2D.connectedAnchor = hook.transform.position;
+            springJoint2D.enabled = true;
+            RemoveForece();
+            this.enabled = true;
+            circle = hook.gameObject.DrawCircle(maxDragDistance, 0.05f, Color.red, Color.red);
             isPressed = true;
             rb.isKinematic = true;
         }
@@ -61,39 +70,41 @@ public class PlayerMovement : MonoBehaviour {
 
     void OnMouseUp()
     {
-        isPressed = false;
-        rb.isKinematic = false;
-        springJoint2D.enabled = false;
-        
-        AddForce();
-        canInteract = false;
-        isRunOnce = true;
-
-        StartCoroutine(IteractTimer());
+        Released();
     }
-    //при отпускании кнопки считаем расстояние между  хуком и объектом
-    //от этого зависит скорость
-    //добавить затуханее движения
+    public void Released()
+    {
+        if (realeaseCanInteract)
+        {
+            realeaseCanInteract = false;
+            isPressed = false;
+            rb.isKinematic = false;
+            springJoint2D.enabled = false;
+            circle.positionCount = 0;
+            AddForce();
+            canInteract = false;
+            StartCoroutine(IteractTimer());
+        }
+    }
+
+
 
     IEnumerator IteractTimer()
     {
-       // yield return new WaitForSeconds(releaseTime);
-
-       // springJoint2D.enabled = false;
-       // this.enabled = false;
-
         yield return new WaitForSeconds(canInteractTime);
         canInteract = true;
     }
 
     private void AddForce()
     {
-        Vector2 direction = (gameObject.transform.position - hook.transform.position).normalized * forceMultypuer;
+        float distance = Vector2.Distance(gameObject.transform.position, hook.transform.position);
+        Vector2 direction = (gameObject.transform.position - hook.transform.position).normalized * forceMultypuer * (distance + 1) * (distance + 1);
         showVector2 = direction;
         rb.AddForce(direction, ForceMode2D.Impulse);
+        //Дальше юзаем замедление....
     }
 
-    private void RemoveFoece()
+    private void RemoveForece()
     {
         rb.velocity = Vector3.zero;
         rb.angularVelocity = 0;
