@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private LineRendererTool rendererTool = new LineRendererTool();
 
-    public Rigidbody2D rb;
-    public Rigidbody2D hook;
-
-
-    public float releaseTime = .15f;
     public float maxDragDistance = 2f;
     public float canInteractTime = 2f;
 
@@ -17,14 +13,15 @@ public class PlayerMovement : MonoBehaviour
     private bool isPressed = false;
     private bool realeaseCanInteract = false;
 
+    private bool countAimingLine = false;
+
     private SpringJoint2D springJoint2D;
 
     public float forceMultypuer;
 
-    public Vector2 showVector2;
-
     #region Dreving aim and circle
     LineRenderer circle;
+    LineRenderer line;
     #endregion
 
     private void Start()
@@ -38,10 +35,15 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            if (Vector3.Distance(mousePos, hook.position) > maxDragDistance)
-                rb.position = hook.position + (mousePos - hook.position).normalized * maxDragDistance;
+            if (Vector3.Distance(mousePos, PlayerStats.instance.hookRigitbody.position) > maxDragDistance)
+                PlayerStats.instance.rb.position = PlayerStats.instance.hookRigitbody.position + (mousePos - PlayerStats.instance.hookRigitbody.position).normalized * maxDragDistance;
             else
-                rb.position = mousePos;
+                PlayerStats.instance.rb.position = mousePos;
+        }
+
+        if (realeaseCanInteract)
+        {
+            line = rendererTool.DrawLine(PlayerStats.instance.hookAimRenderer, PlayerStats.instance.hookAim.transform.position, gameObject.transform.position, maxDragDistance);
         }
     }
 
@@ -56,15 +58,17 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canInteract)
         {
+            countAimingLine = true;
             realeaseCanInteract = true;
-            hook.transform.position = gameObject.transform.position;
-            springJoint2D.connectedAnchor = hook.transform.position;
+            PlayerStats.instance.hookRigitbody.transform.position = gameObject.transform.position;
+            springJoint2D.connectedAnchor = PlayerStats.instance.hookRigitbody.transform.position;
             springJoint2D.enabled = true;
             RemoveForece();
             this.enabled = true;
-            circle = hook.gameObject.DrawCircle(maxDragDistance, 0.05f, Color.red, Color.red);
+            circle = PlayerStats.instance.hookRigitbody.gameObject.DrawCircle(PlayerStats.instance.hookRenderer, maxDragDistance, 0.05f, Color.red, Color.red);
+            
             isPressed = true;
-            rb.isKinematic = true;
+            PlayerStats.instance.rb.isKinematic = true;
         }
     }
 
@@ -76,11 +80,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (realeaseCanInteract)
         {
+            countAimingLine = false;
             realeaseCanInteract = false;
             isPressed = false;
-            rb.isKinematic = false;
+            PlayerStats.instance.rb.isKinematic = false;
             springJoint2D.enabled = false;
             circle.positionCount = 0;
+            line.positionCount = 0;
             AddForce();
             canInteract = false;
             StartCoroutine(IteractTimer());
@@ -97,16 +103,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void AddForce()
     {
-        float distance = Vector2.Distance(gameObject.transform.position, hook.transform.position);
-        Vector2 direction = (gameObject.transform.position - hook.transform.position).normalized * forceMultypuer * (distance + 1) * (distance + 1);
-        showVector2 = direction;
-        rb.AddForce(direction, ForceMode2D.Impulse);
+        float distance = Vector2.Distance(gameObject.transform.position, PlayerStats.instance.hookRigitbody.transform.position);
+        Vector2 direction = (gameObject.transform.position - PlayerStats.instance.hookRigitbody.transform.position).normalized * forceMultypuer * (distance + 1) * (distance + 1);
+        PlayerStats.instance.rb.AddForce(direction, ForceMode2D.Impulse);
         //Дальше юзаем замедление....
     }
 
     private void RemoveForece()
     {
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = 0;
+        PlayerStats.instance.rb.velocity = Vector3.zero;
+        PlayerStats.instance.rb.angularVelocity = 0;
     }
 }
