@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (realeaseCanInteract)
         {
-            line = rendererTool.DrawLine(PlayerStats.instance.hookAimRenderer, PlayerStats.instance.hookAim.transform.position, gameObject.transform.position, maxDragDistance);
+            line = rendererTool.DrawLine(PlayerStats.instance.hookAimRenderer, PlayerStats.instance.hook.transform.position, gameObject.transform.position, maxDragDistance);
         }
     }
 
@@ -86,7 +86,9 @@ public class PlayerMovement : MonoBehaviour
             PlayerStats.instance.rb.isKinematic = false;
             springJoint2D.enabled = false;
             circle.positionCount = 0;
-            line.positionCount = 0;
+            // line.positionCount = 0;
+            line.SetPosition(0, Vector3.zero);
+            line.SetPosition(1, Vector3.zero);
             AddForce();
             canInteract = false;
             StartCoroutine(IteractTimer());
