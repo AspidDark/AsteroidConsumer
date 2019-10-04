@@ -6,17 +6,11 @@ public class EnemyMovement : MonoBehaviour {
     private float xSpeed;
     private float ySpeed;
     
-    public bool IsMoveing { get; set; }
-
     private bool moveUp;
     private bool moveRight;
 
-    // Use this for initialization
-    void Start () {
-        //IsMoveing = false;
-    }
 
-    public void CountAll(float minSpeed, float maxSpeed)
+    public virtual void CountAll(float minSpeed, float maxSpeed)
     {
         xSpeed = MainCount.instance.FloatRandom(minSpeed, maxSpeed);
         moveRight= MainCount.instance.BoolRandom();
@@ -29,13 +23,11 @@ public class EnemyMovement : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    public void Move()
     {
-        if (IsMoveing)
-        {
+        //переделать на импульс!!!!!!!!!! ото так и будет лететь тупо
         MoveX();
         MoveY();
-        }
     }
 
     public virtual void MoveX()

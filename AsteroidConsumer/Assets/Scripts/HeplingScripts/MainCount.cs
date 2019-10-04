@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -23,6 +24,8 @@ namespace TimB
         private void Start()
         {
             instance = instance ?? this;
+            InvokeRepeating("OnTimerEverySecond", 1f, 1f);
+            InvokeRepeating("OnTimerEveryHalfSecond", 1f, .5f);
         }
 
         // Update is called once per frame
@@ -38,18 +41,18 @@ namespace TimB
 
         public int IntegerRandom(int from, int to)
         {
-            return Random.Range(from, to);
+            return UnityEngine.Random.Range(from, to);
         }
 
         public float FloatRandom(float from, float to)
         {
-            return Random.Range(from, to);
+            return UnityEngine.Random.Range(from, to);
         }
 
         public bool BoolRandom()
         {
             // return 0 == Random.Range(0, 2);
-            return Random.value > 0.5f;
+            return UnityEngine.Random.value > 0.5f;
         }
         public int PositiveNegativeRandom()
         {
@@ -72,6 +75,31 @@ namespace TimB
                 }
             }
             return weights.Length;
+        }
+
+
+        //public delegate void TimerEverySecondEventHandler(object source, EventArgs e);
+
+        //public event TimerEverySecondEventHandler TimerEverySecond;
+
+        public EventHandler<EventArgs> TimerEverySecond;
+
+        protected virtual void OnTimerEverySecond()
+        {
+            if (TimerEverySecond != null)
+            {
+                TimerEverySecond(this, EventArgs.Empty);
+            }
+        }
+
+        public EventHandler<EventArgs> TimerEveryHalfSecond;
+
+        protected virtual void OnTimerEveryHalfSecond()
+        {
+            if (TimerEveryHalfSecond != null)
+            {
+                TimerEveryHalfSecond(this, EventArgs.Empty);
+            }
         }
     }
 }
