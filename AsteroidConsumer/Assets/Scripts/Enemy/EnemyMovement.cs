@@ -25,7 +25,7 @@ public class EnemyMovement : MonoBehaviour {
     // Update is called once per frame
     public void Move()
     {
-        //переделать на импульс!!!!!!!!!! ото так и будет лететь тупо
+        //переделать на импульс!!!!!!!!!! ото так и будет лететь тупо ииии! вызвать 1 раз а не в апдейте!!!
         MoveX();
         MoveY();
     }

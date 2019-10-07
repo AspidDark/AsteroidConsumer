@@ -4,7 +4,7 @@ public static class Consts
 {
     //mass
     public const float minMass = 0.05f;
-    public const float maxMass = 1000;
+    public const float maxMass = 10000;
 
     //speed options
     public const float minSpeed=0;
@@ -23,6 +23,12 @@ public static class Consts
     //SolidValue
     public const float minSolidValuePercentage=-100;
     public const float maxSolidValuePercentage = 100;
+
+
+
+    public const float fullConsumeCompressionMulipluer = 1.1f; //1.1??
+
+
 }
 
 public enum EnemyType
@@ -48,9 +54,18 @@ public enum EnemyType
 }
 public enum ConsumeType
 {
+
     fullyConsumable,
     cousumedAndSpited,
     spited,
     desroyed
+}
 
+
+public enum InitiatorCollisionResult
+{
+    otherDestroyed,
+    noAction,
+    bouthDestroyed,
+    initiatorDestroyed
 }

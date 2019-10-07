@@ -9,8 +9,8 @@ public class EnemyBaseEngine : MonoBehaviour
     public EnemyMovement enemyMovement;
     public EnemyStats stats;
 
-    private IEnemyBehavior behavior;
-
+    //private IEnemyBehavior behavior;
+    private EnemyFactory enemyFactory;
     public bool IsMoveing { get; set; }
 
     // Use this for initialization
@@ -21,8 +21,8 @@ public class EnemyBaseEngine : MonoBehaviour
     private void StartingInitiation()
     {
         enemyMovement = enemyMovement ?? gameObject.GetComponent<EnemyMovement>();
-        EnemyFactory enemyFactory = new EnemyFactory(enemyScriptable);
-        behavior = enemyFactory.GetBehaior();
+        
+        
 
       
 
@@ -47,7 +47,7 @@ public class EnemyBaseEngine : MonoBehaviour
         float mass = MainCount.instance.FloatRandom(enemyScriptable.enemyMassMin, enemyScriptable.enemyMassMax);
         rb2d.mass = mass;
         stats.mass = mass;
-        stats.consumePercentage = MainCount.instance.FloatRandom(enemyScriptable.minConsumeValue, enemyScriptable.maxConsumeValue);
+        stats.consumePercentage = MainCount.instance.FloatRandom(enemyScriptable.minConsumeValue, enemyScriptable.maxConsumeValue)/100;
         stats.solidValue = MainCount.instance.FloatRandom(enemyScriptable.minSolidValue, enemyScriptable.maxSolidValue);
         stats.enemyType = enemyScriptable.enemyType;
         stats.consumeType = enemyScriptable.consumeType;
@@ -79,7 +79,7 @@ public class EnemyBaseEngine : MonoBehaviour
     {
         if ((Mathf.Abs(this.transform.position.x - AllObjectData.instance.posX) > AllIndependentData.instance.cameraXWidth * 2) || IsAcceptableDistance())
         {
-            Destroy();
+            Deactivate();
         }
     }
     private bool IsAcceptableDistance()
@@ -87,9 +87,9 @@ public class EnemyBaseEngine : MonoBehaviour
         return Vector3.Distance(this.transform.position, AllObjectData.instance.go.transform.position) > ConstsLibrary.maxObjectDistance;
     }
 
-    private void Destroy()
+    private void Deactivate(bool fullyConsumed=false)
     {
-        if (enemyScriptable.replacedByNames.Length > 0)
+        if (!fullyConsumed&&enemyScriptable.replacedByNames.Length > 0)
         {
             SpawnReplacers();
         }
@@ -115,9 +115,52 @@ public class EnemyBaseEngine : MonoBehaviour
             EnemyStats otherStats = collision.gameObject.GetComponent<EnemyStats>();
             if (stats.mass > otherStats.mass)
             {
-                //do
+               // if()
+                EnemyBaseEngine otherEngine= collision.gameObject.GetComponent<EnemyBaseEngine>();
+                //float add mass
+                enemyFactory = new EnemyFactory(stats, otherStats, collision.relativeVelocity.magnitude);
+                var result= enemyFactory.GetCollisionResult();
+                switch (result.initiatorCollisionResult)
+                {
+                    case InitiatorCollisionResult.otherDestroyed:
+                        Rize(result);
+                        otherEngine.Deactivate(result.FullyConsumed);
+                        break;
+                    case InitiatorCollisionResult.noAction:
+                        //do nothing???
+                        break;
+                    case InitiatorCollisionResult.bouthDestroyed:
+                        otherEngine.Deactivate();
+                        Deactivate();
+                        break;
+                    case InitiatorCollisionResult.initiatorDestroyed:
+                        otherEngine.Rize(result);//&&
+                        Deactivate(result.FullyConsumed);
+                        break;
+                    default:
+                        break;
+                }
+                otherEngine.Deactivate();
+
+
             }
         }
+    }
+    private void Rize(CollisionResult collisionResult)
+    {
+
+    }
+
+
+
+    private void ChangeMass(float additionalMass)
+    {
+
+    }
+
+    private void ChangeSolid()
+    {
+
     }
 
 
