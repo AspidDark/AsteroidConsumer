@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
 
+    public float impulseMuliplyer=4;
+
     private float xSpeed;
     private float ySpeed;
     
@@ -22,34 +24,38 @@ public class EnemyMovement : MonoBehaviour {
 
     }
 
-    // Update is called once per frame
-    public void Move()
+    public void Move(Rigidbody2D rb2d)
     {
-        //переделать на импульс!!!!!!!!!! ото так и будет лететь тупо ииии! вызвать 1 раз а не в апдейте!!!
-        MoveX();
-        MoveY();
+        MoveX(rb2d);
+        MoveY(rb2d);
     }
 
-    public virtual void MoveX()
+    public virtual void MoveX(Rigidbody2D rb2d)
     {
         if (moveRight)
         {
-            transform.Translate(Vector3.right * MainCount.instance.fixedDeltaTime * xSpeed);
+           // transform.Translate(Vector3.right * MainCount.instance.fixedDeltaTime * xSpeed);
+            rb2d.AddForce(Vector3.right*xSpeed* impulseMuliplyer, ForceMode2D.Impulse);
         }
         else
         {
-            transform.Translate(Vector3.left * MainCount.instance.fixedDeltaTime * xSpeed);
+
+          //  transform.Translate(Vector3.left * MainCount.instance.fixedDeltaTime * xSpeed);
+            rb2d.AddForce(Vector3.left*xSpeed* impulseMuliplyer, ForceMode2D.Impulse);
         }
     }
-    public virtual void MoveY()
+    public virtual void MoveY(Rigidbody2D rb2d)
     {
         if (moveUp)
         {
-            transform.Translate(Vector3.up * MainCount.instance.fixedDeltaTime * xSpeed);
+           // transform.Translate(Vector3.up * MainCount.instance.fixedDeltaTime * xSpeed);
+            rb2d.AddForce(Vector3.up * xSpeed * impulseMuliplyer, ForceMode2D.Impulse);
         }
         else
         {
-            transform.Translate(Vector3.down * MainCount.instance.fixedDeltaTime * xSpeed);
+          //  transform.Translate(Vector3.down * MainCount.instance.fixedDeltaTime * xSpeed);
+            rb2d.AddForce(Vector3.down * xSpeed * impulseMuliplyer, ForceMode2D.Impulse);
         }
     }
+  
 }

@@ -11,7 +11,7 @@ public class EnemyBaseEngine : MonoBehaviour
 
     //private IEnemyBehavior behavior;
     private EnemyFactory enemyFactory;
-    public bool IsMoveing { get; set; }
+   // public bool IsMoveing { get; set; }
 
     // Use this for initialization
     void Start()
@@ -21,20 +21,15 @@ public class EnemyBaseEngine : MonoBehaviour
     private void StartingInitiation()
     {
         enemyMovement = enemyMovement ?? gameObject.GetComponent<EnemyMovement>();
-        
-        
-
-      
-
     }
 
-    void FixedUpdate()
-    {
-        if (IsMoveing)
-        {
-            enemyMovement.Move();
-        }
-    }
+    //void FixedUpdate()
+    //{
+    //    if (IsMoveing)
+    //    {
+    //        enemyMovement.Move();
+    //    }
+    //}
 
     private void OnEnable()
     {
@@ -58,7 +53,8 @@ public class EnemyBaseEngine : MonoBehaviour
         }
 
         enemyMovement.CountAll(enemyScriptable.speedMin, enemyScriptable.speedMax);
-        IsMoveing = true;
+        //IsMoveing = true;
+        enemyMovement.Move(rb2d);
 
     }
     private void OnDisable()
@@ -69,7 +65,8 @@ public class EnemyBaseEngine : MonoBehaviour
             return;
         }
         ClosestObject.instance.RemoveForomArray(this.gameObject);
-        IsMoveing = false;
+        // IsMoveing = false;
+        RemoveForece();
       //  transform.localScale = new Vector3(1, 1, 1);
         CancelInvoke();
     }
@@ -102,7 +99,7 @@ public class EnemyBaseEngine : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(item))
             {
-                //to do moveing ti differernt ways
+                //to do moveing to differernt ways
                 ObjectPoolList.instance.GetPooledObject(item, gameObject.transform.position, gameObject.transform.rotation);
             }
         }
@@ -141,27 +138,49 @@ public class EnemyBaseEngine : MonoBehaviour
                         break;
                 }
                 otherEngine.Deactivate();
-
-
             }
         }
     }
     private void Rize(CollisionResult collisionResult)
     {
-
+        ChangeMass(collisionResult.Mass);
+        ChangeSolid(collisionResult.Solid);
+        ChangeType(collisionResult.EnemyType);
     }
 
 
 
-    private void ChangeMass(float additionalMass)
+    private void ChangeMass(float newMass)
     {
-
+        rb2d.mass = newMass;
+        stats.mass = newMass;
     }
 
-    private void ChangeSolid()
+    private void ChangeSolid(float newSolid)
     {
-
+        stats.solidValue = newSolid;
     }
 
+    private void ChangeType(EnemyType newEnemyType)
+    {
+        if (stats.enemyType != newEnemyType)
+        {
+            SetNewAbilities(newEnemyType);
+        }
+    }
+    private void SetNewAbilities(EnemyType newEnemyType)
+    {
+        EnemyAbiliteesCounter enemyAbiliteesCounter = new EnemyAbiliteesCounter();
+        EnemyAbiliteesDTO enemyAbiliteesDTO = enemyAbiliteesCounter.GetEnemyAbilitees(newEnemyType);
+        stats.hasGavity = enemyAbiliteesDTO.hasGavity;
+        stats.gravityRange = enemyAbiliteesDTO.gravityRange;
+        stats.gravityValue = enemyAbiliteesDTO.gravityValue;
+    }
+
+    private void RemoveForece()
+    {
+        rb2d.velocity = Vector3.zero;
+        rb2d.angularVelocity = 0;
+    }
 
 }

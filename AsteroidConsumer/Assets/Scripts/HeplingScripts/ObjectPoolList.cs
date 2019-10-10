@@ -85,5 +85,12 @@ namespace TimB
             }
             return null;
         }
+        public GameObject GetPooledObjectWithData(string tag, Vector3 position, Quaternion rotation, object data, bool canGrow = false)
+        {
+            GameObject go = GetPooledObject(tag, position, rotation, canGrow);
+            // go.GetComponent
+
+            return go;
+        }
     }
 }

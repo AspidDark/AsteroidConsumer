@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class EnemyFactory
+﻿public class EnemyFactory
 {
     private ColllisionResultGeneratorBase _colllisionResultGeneratorBase;
     //Generating enemy type by factory  //Chooseing actions is strategy?
@@ -26,11 +22,7 @@ public class EnemyFactory
         {
             return new CollisionResultDestroyAndBitConsume(initator, other, magnitude);
         }
-        if (initator.mass / other.mass > 1.5)
-        {
-            return new CollisionResultStruggleForLife(initator, other, magnitude);
-        }
-        return new CollisionResultDoSmthOrNot(initator, other, magnitude);
+        return new CollisionResultStruggleForLife(initator, other, magnitude);
     }
 
     public CollisionResult GetCollisionResult()

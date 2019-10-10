@@ -17,8 +17,6 @@ namespace TimB
         public Vector3 gameObjectPosition;
         public Vector2 gameobjectVelocity;
         public float angleZ;
-        public float questZ;
-
 
         private void Awake()
         {

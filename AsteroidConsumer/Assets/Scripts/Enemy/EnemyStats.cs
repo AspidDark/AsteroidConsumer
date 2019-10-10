@@ -13,5 +13,6 @@ public class EnemyStats : MonoBehaviour
 
     public bool hasGavity;
     public float gravityValue;
+    public float gravityRange;
 
 }

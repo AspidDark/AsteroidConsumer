@@ -3,7 +3,7 @@
 public static class Consts  
 {
     //mass
-    public const float minMass = 0.05f;
+    public const float minMass = 0.01f;
     public const float maxMass = 10000;
 
     //speed options
@@ -21,35 +21,68 @@ public static class Consts
     public const float maxConsumePercentage = 100;
 
     //SolidValue
-    public const float minSolidValuePercentage=-100;
-    public const float maxSolidValuePercentage = 100;
+    public const float minSolidValue=-1000;
+    public const float maxSolidValue = 1000;
 
 
 
-    public const float fullConsumeCompressionMulipluer = 1.1f; //1.1??
+    public const float fullConsumeCompressionMulipluer = 1.25f;
+    public const float consumeAndDestroyCompressionMulipluer = 1.2f;
+    public const float destroyAndBitConsumeCompressionMulipluer = 1.1f;
 
+
+
+
+    public const float minMagnitudeValueToInteract = 0.3f;
+
+    public const float minMagnitudeValueToInteractIfStruggle = 0.6f;
+
+
+
+
+    #region Solid
+    public const float muchHigherSolid = 3f;
+    public const float hiegherSolid = 2f;
+    #endregion
+
+
+    #region EnemyTypeCounter
+    public const float greatestBodyCheckDecreaser = 0.9f;
+    public const float blackHoleCheckDecreaser = 0.8f;
+    public const float quazarSolidValueDecreaser = 0.5f;
+    public const float hugeStarMassDesreaser = 0.6f;
+    public const float starDecreaser = 0.25f;
+    public const float planetDecreaser = 0.15f;
+    public const float moonDecreaser = 0.1f;
+    public const float cometDecreaser = 0.05f;
+    //values
+    public const float largeAsteroidMinMass = 400;
+    public const float largeAsteroidMinSolid = 45;
+
+    public const float asteroidMinMass = 300;
+    public const float meteorMinMass = 200f;
+    public const float bolidMinMass = 100f;
+    #endregion
 
 }
 
 public enum EnemyType
 {
     spaceTrash,
+    bolid,
     meteor,
     asteroid,
-    comet,
     largeAsteroid,
-    lagreComet,
+    comet,
     satellite,
     moon,
-    smallPlanet,
     planet,
-    hugePlanet,
     gigantPlanet,
     smallStar,
     star,
     hugeStar,
     quazar,
-    BlackHole,
+    blackHole,
     gigantBlackHole
 }
 public enum ConsumeType

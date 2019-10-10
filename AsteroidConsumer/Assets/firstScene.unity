@@ -895,15 +895,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32f73cc7cf6951c4a865a65180c1622a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  go: {fileID: 0}
-  rb2d: {fileID: 0}
+  go: {fileID: 861519622}
+  rb2d: {fileID: 861519625}
   posX: 0
   posY: 0
   speed: 0
   gameObjectPosition: {x: 0, y: 0, z: 0}
   gameobjectVelocity: {x: 0, y: 0}
   angleZ: 0
-  questZ: 0
 --- !u!114 &1856837652
 MonoBehaviour:
   m_ObjectHideFlags: 0

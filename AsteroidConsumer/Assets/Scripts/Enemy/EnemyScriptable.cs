@@ -24,9 +24,9 @@ public class EnemyScriptable : ScriptableObject
     [Range(Consts.minConsumePercentage, Consts.maxConsumePercentage)]
     public float maxConsumeValue;
 
-    [Range(Consts.minSolidValuePercentage, Consts.maxSolidValuePercentage)]
+    [Range(Consts.minSolidValue, Consts.maxSolidValue)]
     public float minSolidValue;
-    [Range(Consts.minSolidValuePercentage, Consts.maxSolidValuePercentage)]
+    [Range(Consts.minSolidValue, Consts.maxSolidValue)]
     public float maxSolidValue;
     //Variant
     [Space]
