@@ -15,4 +15,12 @@ public class EnemyStats : MonoBehaviour
     public float gravityValue;
     public float gravityRange;
 
+    [Header("Movement Settings")]
+    public bool isRandomMovement;
+    public float xSpeed;
+    public float ySpeed;
+
+    public bool moveUp;
+    public bool moveRight;
+
 }

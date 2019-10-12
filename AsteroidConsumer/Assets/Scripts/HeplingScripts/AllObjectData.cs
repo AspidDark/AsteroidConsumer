@@ -34,8 +34,7 @@ namespace TimB
         {
             gameObjectPosition = go.transform.position;
             gameobjectVelocity = rb2d.velocity;      //to get a Vector3 representation of the velocity
-            speed
-                = gameobjectVelocity.magnitude;             // to get magnitude
+            speed = gameobjectVelocity.magnitude;             // to get magnitude
             posY = go.transform.position.y;
             posX = go.transform.position.x;
             angleZ = go.transform.rotation.eulerAngles.z;

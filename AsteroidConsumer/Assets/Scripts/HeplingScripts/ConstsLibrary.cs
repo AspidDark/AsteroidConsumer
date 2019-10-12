@@ -77,7 +77,7 @@ namespace TimB
         public const string negativeCashLookForMoneyPressedBody = "Spent all day Lookong fore money";
         #endregion
 
-        public const float maxObjectDistance = 120f;
+        public const float maxObjectDistance = 300f;
 
         public const int maxAngleSquare = 90000;
         public const int fullAngle = 360;

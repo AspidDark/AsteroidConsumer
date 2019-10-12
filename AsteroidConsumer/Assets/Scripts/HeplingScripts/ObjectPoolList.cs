@@ -88,9 +88,42 @@ namespace TimB
         public GameObject GetPooledObjectWithData(string tag, Vector3 position, Quaternion rotation, object data, bool canGrow = false)
         {
             GameObject go = GetPooledObject(tag, position, rotation, canGrow);
-            // go.GetComponent
+            go.GetComponent<DataReceiver>().ReceiveData(data);
 
             return go;
+        }
+
+
+
+        public GameObject GenerateZeroPositionedObject(string tag, object data, bool canGrow = false)
+        {
+            if (!pooledListDictionary.ContainsKey(tag))
+            {
+                return null;
+            }
+            foreach (var item in pooledListDictionary[tag])
+            {
+                if (!item.activeInHierarchy)
+                {
+                    GameObject objectToSpawn = item;
+                    objectToSpawn.transform.position = Vector3.zero;
+                    objectToSpawn.transform.rotation = Quaternion.identity;
+                    objectToSpawn.SetActive(true);
+                    objectToSpawn.GetComponent<DataReceiver>().ReceiveData(data);
+                    return objectToSpawn;
+                }
+            }
+            if (canGrow)
+            {
+                GameObject objectToSpawn = Instantiate(pooledListDictionary[tag].First());
+                pooledListDictionary[tag].Add(objectToSpawn);
+                objectToSpawn.transform.position = Vector3.zero;
+                objectToSpawn.transform.rotation = Quaternion.identity;
+                objectToSpawn.SetActive(true);
+                objectToSpawn.GetComponent<DataReceiver>().ReceiveData(data);
+                return objectToSpawn;
+            }
+            return null;
         }
     }
 }

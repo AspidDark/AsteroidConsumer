@@ -102,3 +102,14 @@ public enum InitiatorCollisionResult
     bouthDestroyed,
     initiatorDestroyed
 }
+
+
+public enum EnemyGenerationType
+{
+    randomEvery05Sec,
+    randomEvery1Sec,
+    randomEvery2Sec,
+    ifPlayerIsMoveingEvery05Sec,
+    ifPlayerIsMoveingEvery1Sec,
+    ifPlayerIsMoveingEvery2Sec,
+}
