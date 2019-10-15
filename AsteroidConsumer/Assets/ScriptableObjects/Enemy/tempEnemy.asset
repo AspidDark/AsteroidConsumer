@@ -19,7 +19,7 @@ MonoBehaviour:
   speedMax: 0
   minConsumeValue: 0
   maxConsumeValue: 0
-  minSolidValue: -28
+  minSolidValue: 7
   maxSolidValue: 0
   changeDirection: 0
   changeDirectionSpeedMin: 0

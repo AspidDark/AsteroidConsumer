@@ -77,6 +77,13 @@ namespace TimB
             return weights.Length;
         }
 
+        public int DifferentWeightRandom(List<int> weights)
+        {
+            if(weights.Count>0)
+           return DifferentWeightRandom(weights.ToArray());
+            return 0;
+        }
+
 
         //public delegate void TimerEverySecondEventHandler(object source, EventArgs e);
 
