@@ -57,7 +57,7 @@ namespace TimB
         /// <param name="rotation">rotation to set object at</param>
         /// <param name="canGrow">will object pool grow?</param>
         /// <returns></returns>
-        public GameObject GetPooledObject(string tag, Vector3 position, Quaternion rotation, bool canGrow = false)
+        public GameObject GetPooledObject(string tag, Vector3 position, Quaternion rotation, bool canGrow = false, bool activate=true)
         {
             if (!pooledListDictionary.ContainsKey(tag))
             {
@@ -70,7 +70,7 @@ namespace TimB
                     GameObject objectToSpawn = item;
                     objectToSpawn.transform.position = position;
                     objectToSpawn.transform.rotation = rotation;
-                    objectToSpawn.SetActive(true);
+                    objectToSpawn.SetActive(activate);
                     return objectToSpawn;
                 }
             }
@@ -80,7 +80,7 @@ namespace TimB
                 pooledListDictionary[tag].Add(objectToSpawn);
                 objectToSpawn.transform.position = position;
                 objectToSpawn.transform.rotation = rotation;
-                objectToSpawn.SetActive(true);
+                objectToSpawn.SetActive(activate);
                 return objectToSpawn;
             }
             return null;

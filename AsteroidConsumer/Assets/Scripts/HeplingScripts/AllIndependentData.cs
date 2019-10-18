@@ -11,7 +11,7 @@ namespace TimB
 
         //Camera
         public float cameraXWidth;
-        public float cameraYWidth;
+        public float cameraYHeight;
         // Use this for initialization
         void Start()
         {
@@ -27,8 +27,10 @@ namespace TimB
         public void GetCameraSize()
         {
             Camera camera = Camera.main;
-            float halfHeight = Camera.main.orthographicSize;
+            float halfHeight = camera.orthographicSize;
+            cameraYHeight = halfHeight;
             cameraXWidth = camera.aspect * halfHeight;
+
         }
         #endregion
 

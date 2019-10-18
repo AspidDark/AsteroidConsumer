@@ -6,7 +6,7 @@ public class EnemyBaseEngine : MonoBehaviour
 {
     public Rigidbody2D rb2d;
     public EnemyScriptable enemyScriptable;
-    public EnemyMovement enemyMovement;
+    public EnemyMovementBase enemyMovement;
     public EnemyStats stats;
 
     //private IEnemyBehavior behavior;
@@ -16,11 +16,12 @@ public class EnemyBaseEngine : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
         StartingInitiation();
     }
     private void StartingInitiation()
     {
-        enemyMovement = enemyMovement ?? gameObject.GetComponent<EnemyMovement>();
+        enemyMovement = enemyMovement ?? gameObject.GetComponent<EnemyMovementBase>();
     }
 
 
@@ -35,8 +36,9 @@ public class EnemyBaseEngine : MonoBehaviour
     private void OnEnable()
     {
         EnableInitiation();
+        BaseDistanseCheck baseDistanseCheck = new BaseDistanseCheck(this);
         MainCount.instance.TimerEverySecond += MakeGravity;
-        MainCount.instance.TimerEverySecond += CheckDestroy;
+       
     }
 
     private void EnableInitiation()
@@ -49,47 +51,32 @@ public class EnemyBaseEngine : MonoBehaviour
         stats.consumeType = enemyScriptable.consumeType;
         stats.enemyType = EnemyTypeCounter.GetEnemyType(mass, stats.solidValue);
         ChangeType(stats.enemyType);
-        CountMovement();
-      // enemyMovement.CountAll(enemyScriptable.speedMin, enemyScriptable.speedMax);
-        //IsMoveing = true;
-        enemyMovement.Move(rb2d, stats);
+       // CountMovement();
+        enemyMovement.Move(rb2d, stats, enemyScriptable);//3
+      
 
     }
     private void OnDisable()
     {
-        MainCount.instance.TimerEverySecond -= MakeGravity;
-        MainCount.instance.TimerEverySecond -= CheckDestroy;
+        MainCount.instance.TimerEverySecond -= MakeGravity;//1
+        
         if (ClosestObject.instance == null)
         {
             return;
         }
         ClosestObject.instance.RemoveForomArray(this.gameObject);
         // IsMoveing = false;
-        RemoveForece();
-      //  transform.localScale = new Vector3(1, 1, 1);
+        enemyMovement.RemoveForece(rb2d);//3
+                                         //  transform.localScale = new Vector3(1, 1, 1);
         CancelInvoke();
     }
    
-
-    protected void CheckDestroy(object sender, EventArgs e)
-    {
-        if ((Mathf.Abs(this.transform.position.x - AllObjectData.instance.posX) > AllIndependentData.instance.cameraXWidth * 2) || IsAcceptableDistance())
-        {
-            Deactivate();
-        }
-    }
-
-    protected void MakeGravity(object sender, EventArgs e)
+    protected void MakeGravity(object sender, EventArgs e)//1
     {
         AttractAll();
     }
 
-    private bool IsAcceptableDistance()
-    {
-        return Vector3.Distance(this.transform.position, AllObjectData.instance.go.transform.position) > ConstsLibrary.maxObjectDistance;
-    }
-
-    private void Deactivate(bool fullyConsumed=false)
+    public void Deactivate(bool fullyConsumed=false)//2
     {
         if (!fullyConsumed&&enemyScriptable.replacedByNames.Length > 0)
         {
@@ -98,7 +85,7 @@ public class EnemyBaseEngine : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void SpawnReplacers()
+    private void SpawnReplacers()//2
     {
         foreach (var item in enemyScriptable.replacedByNames)
         {
@@ -110,7 +97,7 @@ public class EnemyBaseEngine : MonoBehaviour
         }
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)//2
     {
         if (!collision.gameObject.CompareTag(TagLibrary.playerTag))
         {
@@ -146,7 +133,7 @@ public class EnemyBaseEngine : MonoBehaviour
             }
         }
     }
-    private void Rize(CollisionResult collisionResult)
+    private void Rize(CollisionResult collisionResult)//2
     {
         ChangeMass(collisionResult.Mass);
         ChangeSolid(collisionResult.Solid);
@@ -155,18 +142,18 @@ public class EnemyBaseEngine : MonoBehaviour
 
 
 
-    private void ChangeMass(float newMass)
+    private void ChangeMass(float newMass)//2
     {
         rb2d.mass = newMass;
         stats.mass = newMass;
     }
 
-    private void ChangeSolid(float newSolid)
+    private void ChangeSolid(float newSolid)//2
     {
         stats.solidValue = newSolid;
     }
 
-    private void ChangeType(EnemyType newEnemyType)
+    private void ChangeType(EnemyType newEnemyType)//2
     {
         if (stats.enemyType != newEnemyType)
         {
@@ -178,30 +165,29 @@ public class EnemyBaseEngine : MonoBehaviour
         }
     }
 
-    private void RemoveForece()
-    {
-        rb2d.velocity = Vector3.zero;
-        rb2d.angularVelocity = 0;
-    }
+    //private void RemoveForece()//3
+    //{
+        
+    //}
 
 
-    private void CountMovement()
-    {
-        stats.xSpeed = MainCount.instance.FloatRandom(enemyScriptable.speedMin, enemyScriptable.speedMax);
-        stats.ySpeed = MainCount.instance.FloatRandom(enemyScriptable.speedMin, enemyScriptable.speedMax);
-        if (stats.isRandomMovement)
-        {
-            stats.moveRight = MainCount.instance.BoolRandom();
-            stats.moveUp = MainCount.instance.BoolRandom();
-        }
-        else
-        {
-            stats.moveRight = AllObjectData.instance.posX > gameObject.transform.position.x;
-            stats.moveUp = AllObjectData.instance.posY> gameObject.transform.position.y;
-        }
-        print("moveRight check" + stats.moveRight);
-        print("moveUp check" + stats.moveUp);
-    }
+    //private void CountMovement()//3
+    //{
+    //    stats.xSpeed = MainCount.instance.FloatRandom(enemyScriptable.speedMin, enemyScriptable.speedMax);
+    //    stats.ySpeed = MainCount.instance.FloatRandom(enemyScriptable.speedMin, enemyScriptable.speedMax);
+    //    if (stats.isRandomMovement)
+    //    {
+    //        stats.moveRight = MainCount.instance.BoolRandom();
+    //        stats.moveUp = MainCount.instance.BoolRandom();
+    //    }
+    //    else
+    //    {
+    //        stats.moveRight = AllObjectData.instance.posX > gameObject.transform.position.x;
+    //        stats.moveUp = AllObjectData.instance.posY> gameObject.transform.position.y;
+    //    }
+    //    print("moveRight check" + stats.moveRight);
+    //    print("moveUp check" + stats.moveUp);
+    //}
 
     private void AttractAll()
     {

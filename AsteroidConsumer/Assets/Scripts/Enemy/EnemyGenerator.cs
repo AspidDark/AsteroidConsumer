@@ -13,6 +13,7 @@ public class EnemyGenerator : MonoBehaviour
 
     #region HeightCheck
     public EnemyObjectSpawnSettings[] startingEnemyObjectSpawnSettings;
+    private List<GameObject> staticGameObjects;
     public EnemyObjectSpawnSettings[] dynamicEnemyObjectSpawnSettings;
 
     public float fromPlayerToSpawnMax = 15;
@@ -26,6 +27,7 @@ public class EnemyGenerator : MonoBehaviour
     void Start()
     {
         instance = instance ?? this;
+        staticGameObjects = new List<GameObject>();
         MainCount.instance.TimerEverySecond += GenerateDynamicEnemy;
         MainCount.instance.TimerEverySecond += GenerateStaticEnemy;
         if (startingEnemyObjectSpawnSettings == null || startingEnemyObjectSpawnSettings.Length == 0)
@@ -44,8 +46,11 @@ public class EnemyGenerator : MonoBehaviour
     {
         foreach (var item in startingEnemyObjectSpawnSettings)
         {
-            ObjectPoolList.instance.GetPooledObject(item.enemyName, new Vector3(item.xPosition, item.yPosition, 0), Quaternion.identity, true);
+           GameObject generated=  ObjectPoolList.instance.
+                GetPooledObject(item.enemyName, new Vector3(item.xPosition, item.yPosition, 0), Quaternion.identity, true, false);
+            staticGameObjects.Add(generated);
         }
+        GenerateStaticEnemy(new object(), new EventArgs());
     }
     //проверяем позицию игрока и если он близко к краю сгенеренного поля генерим еще объекты
     // есть объекты которые если далеко исчезают но при приближении игрока появляются но в пул передаются их фиксированные координаты
@@ -63,7 +68,7 @@ public class EnemyGenerator : MonoBehaviour
             float enemyYposition = AllObjectData.instance.posY + MainCount.instance.FloatRandom(fromPlayerToSpawnMin, fromPlayerToSpawnMax) 
                 *(MainCount.instance.BoolRandom() ? 1 : -1);
             //generate Left??
-            float enemyXposition = AllObjectData.instance.posX + MainCount.instance.FloatRandom(fromPlayerToSpawnMin, fromPlayerToSpawnMax)
+            float enemyXposition = AllObjectData.instance.posX + MainCount.instance.FloatRandom(fromPlayerToSpawnMin, fromPlayerToSpawnMax)//!!!!! add X widh!!!
                 * (MainCount.instance.BoolRandom() ? 1 : -1);
             ObjectPoolList.instance.GetPooledObject(dynamicEnemyObjectSpawnSettings[enemyToSpawn].enemyName, new Vector3(enemyXposition, enemyYposition, 0), Quaternion.identity, true);
         }
@@ -72,7 +77,11 @@ public class EnemyGenerator : MonoBehaviour
 
     private void GenerateStaticEnemy(object sender, EventArgs e)
     {
-
+        foreach (var item in staticGameObjects)
+        {
+            item.SetActive(!MainCount.instance.
+            IsOutRanged(item.transform, AllObjectData.instance.go.transform, ConstsLibrary.maxObjectDistance));
+        }
     }
 
     //public void HeightCheckTimerUpdate()

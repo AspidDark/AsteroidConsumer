@@ -1,16 +1,8 @@
 ﻿using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour {
-
-    public float impulseMuliplyer=4;
-
-    public void Move(Rigidbody2D rb2d, EnemyStats enemyStats)
-    {
-        MoveX(rb2d, enemyStats);
-        MoveY(rb2d, enemyStats);
-    }
-
-    public virtual void MoveX(Rigidbody2D rb2d, EnemyStats enemyStats)
+public class EnemyMovement : EnemyMovementBase
+{
+    protected override void MoveX(Rigidbody2D rb2d, EnemyStats enemyStats)
     {
         if (enemyStats.moveRight)
         {
@@ -22,7 +14,7 @@ public class EnemyMovement : MonoBehaviour {
             rb2d.AddForce(Vector3.left* enemyStats.xSpeed * impulseMuliplyer, ForceMode2D.Impulse);
         }
     }
-    public virtual void MoveY(Rigidbody2D rb2d, EnemyStats enemyStats)
+    protected override void MoveY(Rigidbody2D rb2d, EnemyStats enemyStats)
     {
         if (enemyStats.moveUp)
         {
@@ -32,6 +24,7 @@ public class EnemyMovement : MonoBehaviour {
         {
             rb2d.AddForce(Vector3.down * enemyStats.ySpeed * impulseMuliplyer, ForceMode2D.Impulse);
         }
+        
     }
   
 }

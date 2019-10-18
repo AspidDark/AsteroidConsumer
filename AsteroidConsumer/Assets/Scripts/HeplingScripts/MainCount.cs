@@ -108,5 +108,15 @@ namespace TimB
                 TimerEveryHalfSecond(this, EventArgs.Empty);
             }
         }
+
+        public float Distance(Transform from, Transform to)
+        {
+            return Vector3.Distance(from.position, to.position);
+        }
+
+        public bool IsOutRanged(Transform from, Transform to, float range)
+        {
+            return Distance(from, to)>range;
+        }
     }
 }
