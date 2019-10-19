@@ -5,7 +5,7 @@ public class EnemyMovementBase : MonoBehaviour {
 
     public float impulseMuliplyer = 4;
 
-    public void Move(Rigidbody2D rb2d, EnemyStats stats, EnemyScriptable enemyScriptable)
+    public virtual void Move(Rigidbody2D rb2d, EnemyStats stats, EnemyScriptable enemyScriptable)
     {
         stats.xSpeed = MainCount.instance.FloatRandom(enemyScriptable.speedMin, enemyScriptable.speedMax);
         stats.ySpeed = MainCount.instance.FloatRandom(enemyScriptable.speedMin, enemyScriptable.speedMax);

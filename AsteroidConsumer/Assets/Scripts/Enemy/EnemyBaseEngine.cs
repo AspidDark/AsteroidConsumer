@@ -7,6 +7,8 @@ public class EnemyBaseEngine : MonoBehaviour
     public Rigidbody2D rb2d;
     public EnemyScriptable enemyScriptable;
     public EnemyMovementBase enemyMovement;
+    public EnemyAttractorEngine enemyAttractor;
+    
     public EnemyStats stats;
 
     //private IEnemyBehavior behavior;
@@ -22,6 +24,8 @@ public class EnemyBaseEngine : MonoBehaviour
     private void StartingInitiation()
     {
         enemyMovement = enemyMovement ?? gameObject.GetComponent<EnemyMovementBase>();
+        enemyAttractor = enemyAttractor ?? gameObject.GetComponent<EnemyAttractorEngine>();
+        enemyAttractor.Attract(gameObject, stats);
     }
 
 
@@ -162,6 +166,7 @@ public class EnemyBaseEngine : MonoBehaviour
             stats.hasGavity = enemyAbiliteesDTO.hasGavity;
             stats.gravityRange = enemyAbiliteesDTO.gravityRange;
             stats.gravityValue = enemyAbiliteesDTO.gravityValue;
+            enemyAttractor.Attract(gameObject, stats);
         }
     }
 

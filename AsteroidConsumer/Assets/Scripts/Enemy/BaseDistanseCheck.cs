@@ -23,10 +23,4 @@ public class BaseDistanseCheck  {
             _enemyBaseEngine.Deactivate();
         }
     }
-
-    protected virtual bool IsAcceptableDistance()//2
-    {
-        return Vector3.Distance(_enemyBaseEngine.transform.position, AllObjectData.instance.go.transform.position) > ConstsLibrary.maxObjectDistance;
-    }
-
 }

@@ -65,10 +65,10 @@ public class EnemyGenerator : MonoBehaviour
             //What object to generate
             int enemyToSpawn = MainCount.instance.DifferentWeightRandom(dynamicEnemyObjectSpawnSettings.Select(x => x.spawnChance).ToArray());
             //generate up?
-            float enemyYposition = AllObjectData.instance.posY + MainCount.instance.FloatRandom(fromPlayerToSpawnMin, fromPlayerToSpawnMax) 
+            float enemyYposition = AllObjectData.instance.posY + (MainCount.instance.FloatRandom(fromPlayerToSpawnMin, fromPlayerToSpawnMax) + AllIndependentData.instance.cameraYHeight)
                 *(MainCount.instance.BoolRandom() ? 1 : -1);
             //generate Left??
-            float enemyXposition = AllObjectData.instance.posX + MainCount.instance.FloatRandom(fromPlayerToSpawnMin, fromPlayerToSpawnMax)//!!!!! add X widh!!!
+            float enemyXposition = AllObjectData.instance.posX + (MainCount.instance.FloatRandom(fromPlayerToSpawnMin, fromPlayerToSpawnMax) + AllIndependentData.instance.cameraXWidth)//!!!!! add X widh!!!
                 * (MainCount.instance.BoolRandom() ? 1 : -1);
             ObjectPoolList.instance.GetPooledObject(dynamicEnemyObjectSpawnSettings[enemyToSpawn].enemyName, new Vector3(enemyXposition, enemyYposition, 0), Quaternion.identity, true);
         }

@@ -877,6 +877,7 @@ GameObject:
   - component: {fileID: 1856837652}
   - component: {fileID: 1856837651}
   - component: {fileID: 1856837654}
+  - component: {fileID: 1856837655}
   m_Layer: 0
   m_Name: HelpersObject
   m_TagString: Untagged
@@ -941,6 +942,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fromGameobject: {fileID: 861519622}
+--- !u!114 &1856837655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1856837650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a888bb9ec5edb7541ac04ab2e1af1410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraXWidth: 0
+  cameraYHeight: 0
 --- !u!50 &1925381130 stripped
 Rigidbody2D:
   m_PrefabParentObject: {fileID: 50461068082260682, guid: ecc656149e8c3d747acd8c457f87b34f,
