@@ -8,12 +8,12 @@ public class EnemyBaseEngine : MonoBehaviour
     public EnemyScriptable enemyScriptable;
     public EnemyMovementBase enemyMovement;
     public EnemyAttractorEngine enemyAttractor;
-    
+
     public EnemyStats stats;
 
     //private IEnemyBehavior behavior;
     private EnemyFactory enemyFactory;
-   // public bool IsMoveing { get; set; }
+    // public bool IsMoveing { get; set; }
 
     // Use this for initialization
     void Start()
@@ -25,6 +25,7 @@ public class EnemyBaseEngine : MonoBehaviour
     {
         enemyMovement = enemyMovement ?? gameObject.GetComponent<EnemyMovementBase>();
         enemyAttractor = enemyAttractor ?? gameObject.GetComponent<EnemyAttractorEngine>();
+        EnableInitiation();
         enemyAttractor.Attract(gameObject, stats);
     }
 
@@ -40,30 +41,35 @@ public class EnemyBaseEngine : MonoBehaviour
     private void OnEnable()
     {
         EnableInitiation();
-        BaseDistanseCheck baseDistanseCheck = new BaseDistanseCheck(this);
-        MainCount.instance.TimerEverySecond += MakeGravity;
-       
     }
 
     private void EnableInitiation()
     {
-        float mass = MainCount.instance.FloatRandom(enemyScriptable.enemyMassMin, enemyScriptable.enemyMassMax);
-        rb2d.mass = mass;
-        stats.mass = mass;
-        stats.consumePercentage = MainCount.instance.FloatRandom(enemyScriptable.minConsumeValue, enemyScriptable.maxConsumeValue)/100;
-        stats.solidValue = MainCount.instance.FloatRandom(enemyScriptable.minSolidValue, enemyScriptable.maxSolidValue);
-        stats.consumeType = enemyScriptable.consumeType;
-        stats.enemyType = EnemyTypeCounter.GetEnemyType(mass, stats.solidValue);
-        ChangeType(stats.enemyType);
-       // CountMovement();
-        enemyMovement.Move(rb2d, stats, enemyScriptable);//3
-      
+        if (MainCount.instance != null)
+        {
+            float mass = MainCount.instance.FloatRandom(enemyScriptable.enemyMassMin, enemyScriptable.enemyMassMax);
+            rb2d.mass = mass;
+            stats.mass = mass;
+            stats.consumePercentage = MainCount.instance.FloatRandom(enemyScriptable.minConsumeValue, enemyScriptable.maxConsumeValue) / 100;
+            stats.solidValue = MainCount.instance.FloatRandom(enemyScriptable.minSolidValue, enemyScriptable.maxSolidValue);
+            stats.consumeType = enemyScriptable.consumeType;
+            stats.enemyType = EnemyTypeCounter.GetEnemyType(mass, stats.solidValue);
+            stats.isRandomMovement = enemyScriptable.isRandomMpvement;
+            ChangeType(stats.enemyType);
+            
+            // CountMovement();
+            enemyMovement.Move(rb2d, stats, enemyScriptable);
+
+            BaseDistanseCheck baseDistanseCheck = new BaseDistanseCheck(this);
+           // MainCount.instance.TimerEverySecond += MakeGravity;
+        }
+
 
     }
     private void OnDisable()
     {
-        MainCount.instance.TimerEverySecond -= MakeGravity;//1
-        
+        //MainCount.instance.TimerEverySecond -= MakeGravity;//1
+
         if (ClosestObject.instance == null)
         {
             return;
@@ -74,17 +80,19 @@ public class EnemyBaseEngine : MonoBehaviour
                                          //  transform.localScale = new Vector3(1, 1, 1);
         CancelInvoke();
     }
-   
-    protected void MakeGravity(object sender, EventArgs e)//1
-    {
-        AttractAll();
-    }
 
-    public void Deactivate(bool fullyConsumed=false)//2
+    //protected void MakeGravity(object sender, EventArgs e)//1
+    //{
+    //    AttractAll();
+    //}
+
+    public void Deactivate(bool fullyConsumed = false)//2
     {
-        if (!fullyConsumed&&enemyScriptable.replacedByNames.Length > 0)
+        if (!fullyConsumed && enemyScriptable.replacedByNames.Length > 0)
         {
             SpawnReplacers();
+            //TO DO set to new objects     public bool moveUp;  public bool moveRight;
+            // move to different locations!!!
         }
         gameObject.SetActive(false);
     }
@@ -108,11 +116,11 @@ public class EnemyBaseEngine : MonoBehaviour
             EnemyStats otherStats = collision.gameObject.GetComponent<EnemyStats>();
             if (stats.mass > otherStats.mass)
             {
-               // if()
-                EnemyBaseEngine otherEngine= collision.gameObject.GetComponent<EnemyBaseEngine>();
+                // if()
+                EnemyBaseEngine otherEngine = collision.gameObject.GetComponent<EnemyBaseEngine>();
                 //float add mass
                 enemyFactory = new EnemyFactory(stats, otherStats, collision.relativeVelocity.magnitude);
-                var result= enemyFactory.GetCollisionResult();
+                var result = enemyFactory.GetCollisionResult();
                 switch (result.initiatorCollisionResult)
                 {
                     case InitiatorCollisionResult.otherDestroyed:
@@ -159,20 +167,20 @@ public class EnemyBaseEngine : MonoBehaviour
 
     private void ChangeType(EnemyType newEnemyType)//2
     {
-        if (stats.enemyType != newEnemyType)
-        {
+        //if (stats.enemyType != newEnemyType)
+        //{
             EnemyAbiliteesCounter enemyAbiliteesCounter = new EnemyAbiliteesCounter();
             EnemyAbiliteesDTO enemyAbiliteesDTO = enemyAbiliteesCounter.GetEnemyAbilitees(newEnemyType);
             stats.hasGavity = enemyAbiliteesDTO.hasGavity;
             stats.gravityRange = enemyAbiliteesDTO.gravityRange;
             stats.gravityValue = enemyAbiliteesDTO.gravityValue;
             enemyAttractor.Attract(gameObject, stats);
-        }
+       // }
     }
 
     //private void RemoveForece()//3
     //{
-        
+
     //}
 
 

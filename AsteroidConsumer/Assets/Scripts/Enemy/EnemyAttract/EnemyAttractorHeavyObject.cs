@@ -12,7 +12,7 @@ public class EnemyAttractorHeavyObject : EnemyAttractorBase
     }
     protected virtual void DoAttarct(object sender, EventArgs e)
     {
-        //Attrct here
+        //TO DO Attrct here
     }
     private void OnDisable()
     {

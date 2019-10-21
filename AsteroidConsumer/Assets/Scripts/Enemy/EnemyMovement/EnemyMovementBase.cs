@@ -7,8 +7,8 @@ public class EnemyMovementBase : MonoBehaviour {
 
     public virtual void Move(Rigidbody2D rb2d, EnemyStats stats, EnemyScriptable enemyScriptable)
     {
-        stats.xSpeed = MainCount.instance.FloatRandom(enemyScriptable.speedMin, enemyScriptable.speedMax);
-        stats.ySpeed = MainCount.instance.FloatRandom(enemyScriptable.speedMin, enemyScriptable.speedMax);
+        stats.xSpeed = GetRandomSpeed(enemyScriptable);
+        stats.ySpeed = GetRandomSpeed(enemyScriptable);
         if (stats.isRandomMovement)
         {
             stats.moveRight = MainCount.instance.BoolRandom();
@@ -16,6 +16,7 @@ public class EnemyMovementBase : MonoBehaviour {
         }
         else
         {
+            //to sceeen movement
             stats.moveRight = AllObjectData.instance.posX > gameObject.transform.position.x;
             stats.moveUp = AllObjectData.instance.posY > gameObject.transform.position.y;
         }
@@ -27,11 +28,25 @@ public class EnemyMovementBase : MonoBehaviour {
 
     protected virtual void MoveX(Rigidbody2D rb2d, EnemyStats enemyStats)
     {
-        //simple move here
+        if (enemyStats.moveRight)
+        {
+            rb2d.AddForce(Vector3.right * enemyStats.xSpeed * impulseMuliplyer, ForceMode2D.Impulse);
+        }
+        else
+        {
+            rb2d.AddForce(Vector3.left * enemyStats.xSpeed * impulseMuliplyer, ForceMode2D.Impulse);
+        }
     }
     protected virtual void MoveY(Rigidbody2D rb2d, EnemyStats enemyStats)
     {
-        //simple move here
+        if (enemyStats.moveUp)
+        {
+            rb2d.AddForce(Vector3.up * enemyStats.ySpeed * impulseMuliplyer, ForceMode2D.Impulse);
+        }
+        else
+        {
+            rb2d.AddForce(Vector3.down * enemyStats.ySpeed * impulseMuliplyer, ForceMode2D.Impulse);
+        }
     }
 
     public void RemoveForece(Rigidbody2D rb2d)
@@ -39,4 +54,11 @@ public class EnemyMovementBase : MonoBehaviour {
         rb2d.velocity = Vector3.zero;
         rb2d.angularVelocity = 0;
     }
+
+
+    protected float GetRandomSpeed(EnemyScriptable enemyScriptable)
+    {
+        return MainCount.instance.FloatRandom(enemyScriptable.speedMin, enemyScriptable.speedMax);
+    }
+
 }
