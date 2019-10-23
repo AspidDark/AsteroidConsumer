@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyMovementBase : MonoBehaviour {
 
-    public float impulseMuliplyer = 4;
+    public float impulseMuliplyer = 1;
 
     public virtual void Move(Rigidbody2D rb2d, EnemyStats stats, EnemyScriptable enemyScriptable)
     {
@@ -28,24 +28,26 @@ public class EnemyMovementBase : MonoBehaviour {
 
     protected virtual void MoveX(Rigidbody2D rb2d, EnemyStats enemyStats)
     {
+        float speed = enemyStats.xSpeed * impulseMuliplyer * enemyStats.mass;
         if (enemyStats.moveRight)
         {
-            rb2d.AddForce(Vector3.right * enemyStats.xSpeed * impulseMuliplyer, ForceMode2D.Impulse);
+            rb2d.AddForce(Vector3.right * speed, ForceMode2D.Impulse);
         }
         else
         {
-            rb2d.AddForce(Vector3.left * enemyStats.xSpeed * impulseMuliplyer, ForceMode2D.Impulse);
+            rb2d.AddForce(Vector3.left * speed, ForceMode2D.Impulse);
         }
     }
     protected virtual void MoveY(Rigidbody2D rb2d, EnemyStats enemyStats)
     {
+        float speed = enemyStats.xSpeed * impulseMuliplyer * enemyStats.mass;
         if (enemyStats.moveUp)
         {
-            rb2d.AddForce(Vector3.up * enemyStats.ySpeed * impulseMuliplyer, ForceMode2D.Impulse);
+            rb2d.AddForce(Vector3.up * speed, ForceMode2D.Impulse);
         }
         else
         {
-            rb2d.AddForce(Vector3.down * enemyStats.ySpeed * impulseMuliplyer, ForceMode2D.Impulse);
+            rb2d.AddForce(Vector3.down * speed, ForceMode2D.Impulse);
         }
     }
 

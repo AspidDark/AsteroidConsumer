@@ -302,6 +302,53 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Cinemachine.CinemachineBrain+VcamEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1001 &818047984
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4215977558999766, guid: 8a3de3eca5663324489c825a8b575a2e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -18.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215977558999766, guid: 8a3de3eca5663324489c825a8b575a2e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215977558999766, guid: 8a3de3eca5663324489c825a8b575a2e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215977558999766, guid: 8a3de3eca5663324489c825a8b575a2e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215977558999766, guid: 8a3de3eca5663324489c825a8b575a2e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215977558999766, guid: 8a3de3eca5663324489c825a8b575a2e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215977558999766, guid: 8a3de3eca5663324489c825a8b575a2e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215977558999766, guid: 8a3de3eca5663324489c825a8b575a2e, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114515198785046890, guid: 8a3de3eca5663324489c825a8b575a2e,
+        type: 2}
+      propertyPath: impulseMuliplyer
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 8a3de3eca5663324489c825a8b575a2e, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &858019961
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,7 +574,7 @@ MonoBehaviour:
   hookRigitbody: {fileID: 1925381130}
   hookRenderer: {fileID: 1485101892}
   playerMassShow: 0
---- !u!1001 &976292605
+--- !u!1001 &1344256156
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -536,11 +583,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4230553160416802, guid: 499ba74ffa268674b9df29c4815d9060, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 15.66
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4230553160416802, guid: 499ba74ffa268674b9df29c4815d9060, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 4.9
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4230553160416802, guid: 499ba74ffa268674b9df29c4815d9060, type: 2}
       propertyPath: m_LocalPosition.z
@@ -568,13 +615,13 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114418749873144730, guid: 499ba74ffa268674b9df29c4815d9060,
         type: 2}
-      propertyPath: toXPosition
-      value: 3
+      propertyPath: toYPosition
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114418749873144730, guid: 499ba74ffa268674b9df29c4815d9060,
         type: 2}
-      propertyPath: toYPosition
-      value: 3
+      propertyPath: toXPosition
+      value: -5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 499ba74ffa268674b9df29c4815d9060, type: 2}
