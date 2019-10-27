@@ -85,9 +85,9 @@ namespace TimB
             }
             return null;
         }
-        public GameObject GetPooledObjectWithData(string tag, Vector3 position, Quaternion rotation, object data, bool canGrow = false)
+        public GameObject GetPooledObjectWithData(string tag, Vector3 position, Quaternion rotation, object data, bool canGrow = false, bool activate=true)
         {
-            GameObject go = GetPooledObject(tag, position, rotation, canGrow);
+            GameObject go = GetPooledObject(tag, position, rotation, canGrow, activate);
             go.GetComponent<DataReceiver>().ReceiveData(data);
 
             return go;
@@ -95,7 +95,7 @@ namespace TimB
 
 
 
-        public GameObject GenerateZeroPositionedObject(string tag, object data, bool canGrow = false)
+        public GameObject GeneratePositionedObject(string tag, object data, Vector3 position, Quaternion quaternion, bool activate = true, bool canGrow = false)
         {
             if (!pooledListDictionary.ContainsKey(tag))
             {
@@ -106,9 +106,9 @@ namespace TimB
                 if (!item.activeInHierarchy)
                 {
                     GameObject objectToSpawn = item;
-                    objectToSpawn.transform.position = Vector3.zero;
-                    objectToSpawn.transform.rotation = Quaternion.identity;
-                    objectToSpawn.SetActive(true);
+                    objectToSpawn.transform.position = position;
+                    objectToSpawn.transform.rotation = quaternion;
+                    objectToSpawn.SetActive(activate);
                     objectToSpawn.GetComponent<DataReceiver>().ReceiveData(data);
                     return objectToSpawn;
                 }
@@ -117,9 +117,9 @@ namespace TimB
             {
                 GameObject objectToSpawn = Instantiate(pooledListDictionary[tag].First());
                 pooledListDictionary[tag].Add(objectToSpawn);
-                objectToSpawn.transform.position = Vector3.zero;
-                objectToSpawn.transform.rotation = Quaternion.identity;
-                objectToSpawn.SetActive(true);
+                objectToSpawn.transform.position = position;
+                objectToSpawn.transform.rotation = quaternion;
+                objectToSpawn.SetActive(activate);
                 objectToSpawn.GetComponent<DataReceiver>().ReceiveData(data);
                 return objectToSpawn;
             }

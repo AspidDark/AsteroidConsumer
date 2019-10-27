@@ -623,6 +623,12 @@ Prefab:
       propertyPath: toXPosition
       value: -5
       objectReference: {fileID: 0}
+    - target: {fileID: 114362553359583514, guid: 499ba74ffa268674b9df29c4815d9060,
+        type: 2}
+      propertyPath: enemyScriptable
+      value: 
+      objectReference: {fileID: 11400000, guid: ca8a27894b1769342bcae675848e630b,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 499ba74ffa268674b9df29c4815d9060, type: 2}
   m_IsPrefabParent: 0
@@ -834,7 +840,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05ef53e8a08a156438a390387962187d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pools: []
+  pools:
+  - tag: Burst
+    prefab: {fileID: 1353347370528490, guid: 5b44807caaa5414498002fadb0b60ac1, type: 2}
+    size: 5
 --- !u!4 &1676617545
 Transform:
   m_ObjectHideFlags: 0

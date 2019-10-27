@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyNoMovement : EnemyMovementBase
 {
-    public override void Move(Rigidbody2D rb2d, EnemyStats stats, EnemyScriptable enemyScriptable)
+    public override void Move(Rigidbody2D rb2d, EnemyStats stats)
     {
     }
 

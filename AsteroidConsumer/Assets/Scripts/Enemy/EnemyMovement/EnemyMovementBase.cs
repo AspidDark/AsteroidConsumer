@@ -5,10 +5,10 @@ public class EnemyMovementBase : MonoBehaviour {
 
     public float impulseMuliplyer = 1;
 
-    public virtual void Move(Rigidbody2D rb2d, EnemyStats stats, EnemyScriptable enemyScriptable)
+    public virtual void Move(Rigidbody2D rb2d, EnemyStats stats)
     {
-        stats.xSpeed = GetRandomSpeed(enemyScriptable);
-        stats.ySpeed = GetRandomSpeed(enemyScriptable);
+        stats.xSpeed = GetRandomSpeed(stats);
+        stats.ySpeed = GetRandomSpeed(stats);
         if (stats.isRandomMovement)
         {
             stats.moveRight = MainCount.instance.BoolRandom();
@@ -58,9 +58,9 @@ public class EnemyMovementBase : MonoBehaviour {
     }
 
 
-    protected float GetRandomSpeed(EnemyScriptable enemyScriptable)
+    protected float GetRandomSpeed(EnemyStats stats)
     {
-        return MainCount.instance.FloatRandom(enemyScriptable.speedMin, enemyScriptable.speedMax);
+        return MainCount.instance.FloatRandom(stats.speedMin, stats.speedMax);
     }
 
 }

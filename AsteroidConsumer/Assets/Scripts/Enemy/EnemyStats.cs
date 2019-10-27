@@ -23,4 +23,6 @@ public class EnemyStats : MonoBehaviour
     public bool moveUp;
     public bool moveRight;
 
+    public float speedMin;
+    public float speedMax;
 }
