@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Trash1
   replacedByNames: []
-  enemyMassMin: 500
-  enemyMassMax: 1000
+  enemyMassMin: 50
+  enemyMassMax: 50
   speedMin: 0
   speedMax: 3.7
   isRandomMpvement: 0

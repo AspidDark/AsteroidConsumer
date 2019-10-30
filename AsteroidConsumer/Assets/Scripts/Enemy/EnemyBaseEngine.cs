@@ -4,7 +4,11 @@ using System;
 
 public class EnemyBaseEngine : MonoBehaviour
 {
-    public Vector2 shower;
+    //public Vector2 shower;
+    //public Vector2 rotated1;
+    //public Vector2 rotated2;
+    //public Vector2 rotated3;
+    //public Vector2 rotated4;
 
     public Rigidbody2D rb2d;
     public EnemyScriptable enemyScriptable;
@@ -44,10 +48,9 @@ public class EnemyBaseEngine : MonoBehaviour
     {
         if (MainCount.instance != null)
         {
-            float mass;
+            float mass = MainCount.instance.FloatRandom(enemyScriptable.enemyMassMin, enemyScriptable.enemyMassMax);
             if (incomeingData != null && incomeingData.isSecondGeneratedObject)
             {
-                mass = MainCount.instance.FloatRandom(incomeingData.enemyMassMin, incomeingData.enemyMassMax);
                 stats.xSpeed = incomeingData.xSpeed;
                 stats.ySpeed = incomeingData.ySpeed;
                 stats.moveRight = incomeingData.moveRight;
@@ -55,7 +58,6 @@ public class EnemyBaseEngine : MonoBehaviour
             }
             else
             {
-                mass = MainCount.instance.FloatRandom(enemyScriptable.enemyMassMin, enemyScriptable.enemyMassMax);
                 stats.speedMin = enemyScriptable.speedMin;
                 stats.speedMax = enemyScriptable.speedMax;
             }
@@ -112,15 +114,40 @@ public class EnemyBaseEngine : MonoBehaviour
 
     private void SpawnReplacers(Vector2 collisionPoint)//2
     {
-        foreach (var item in enemyScriptable.replacedByNames)
+        for (int i = 0; i < enemyScriptable.replacedByNames.Length; i++)
         {
-            if (!string.IsNullOrEmpty(item))
+            if (!string.IsNullOrEmpty(enemyScriptable.replacedByNames[i]))
             {
-                //В объект передать EnemyIncomeingData считать его тут...
-                //to do moveing to differernt ways
-                ObjectPoolList.instance.GetPooledObjectWithData(item, gameObject.transform.position, gameObject.transform.rotation, "TestText", true, false);
+                EnemyToReplacersDTO enemyToReplacersDTO = new EnemyToReplacersDTO
+                {
+                    stats = stats,
+                    destroyedEnemyPosition = this.transform.position,
+                    collisionPoint = collisionPoint,
+                    numberOfObject=i
+                };
+                ObjectPoolList.
+                    instance.GetPooledObjectWithData(enemyScriptable.replacedByNames[i], gameObject.transform.position, 
+                  gameObject.transform.rotation, enemyToReplacersDTO, true, false);
             }
         }
+        //foreach (var item in enemyScriptable.replacedByNames)
+        //{
+        //    if (!string.IsNullOrEmpty(item))
+        //    {
+        //        EnemyToReplacersDTO enemyToReplacersDTO = new EnemyToReplacersDTO
+        //        {
+        //            stats = stats,
+        //            destroyedEnemyPosition = this.transform.position,
+        //            collisionPoint=collisionPoint
+        //        };
+        //        //В объект передать EnemyIncomeingData считать его тут...
+        //        //to do moveing to differernt ways
+        //        var obj= ObjectPoolList.
+        //            instance.GetPooledObjectWithData(item, gameObject.transform.position, 
+        //            gameObject.transform.rotation, enemyToReplacersDTO, true, false);
+        //        //obj.SetActive(true);
+        //    }
+        //}
     }
 
     public void OnCollisionEnter2D(Collision2D collision)//2
@@ -131,6 +158,12 @@ public class EnemyBaseEngine : MonoBehaviour
             if (stats.mass > otherStats.mass)
             {
                 Vector2 collisionPoint = collision.contacts[0].point;
+                //Vector2 newTemp = (collisionPoint - (Vector2)(gameObject.transform.position)).normalized;
+                //shower = newTemp;
+                //rotated1 = newTemp.GetRotated(30);
+                //rotated2= newTemp.GetRotated(-30);
+                //rotated3 = newTemp.GetRotated(150);
+                //rotated4= newTemp.GetRotated(-150);
                 EnemyBaseEngine otherEngine = collision.gameObject.GetComponent<EnemyBaseEngine>();
                 enemyFactory = new EnemyFactory(stats, otherStats, collision.relativeVelocity.magnitude);
                 var result = enemyFactory.GetCollisionResult();

@@ -24,9 +24,10 @@ GameObject:
   - component: {fileID: 58943773432350836}
   - component: {fileID: 114960202463284988}
   - component: {fileID: 114059759199078698}
+  - component: {fileID: 114147625039822496}
   - component: {fileID: 114676292694083772}
-  - component: {fileID: 114618006531816300}
   - component: {fileID: 114537477889913118}
+  - component: {fileID: 114420266782088560}
   m_Layer: 0
   m_Name: BaseEnemyBirst
   m_TagString: Untagged
@@ -106,6 +107,40 @@ MonoBehaviour:
   ySpeed: 0
   moveUp: 0
   moveRight: 0
+  speedMin: 0
+  speedMax: 0
+--- !u!114 &114147625039822496
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1353347370528490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 395b6ae8fc7b047448b528a7a28254a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impulseMuliplyer: 1
+--- !u!114 &114420266782088560
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1353347370528490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce978de92178cd743ba06f878ad0639e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSecondGeneratedObject: 0
+  enemyMassMin: 0
+  enemyMassMax: 0
+  speedMin: 0
+  speedMax: 0
+  xSpeed: 0
+  ySpeed: 0
+  moveUp: 0
+  moveRight: 0
 --- !u!114 &114537477889913118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -117,19 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a335e69a0b0724c4990440a34bb9c4ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  incData: 
---- !u!114 &114618006531816300
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1353347370528490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0a591ac613e9fc43aee60269a6c4039, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  impulseMuliplyer: 4
+  minAngle: 45
 --- !u!114 &114676292694083772
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -154,8 +177,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb2d: {fileID: 50828823578581370}
   enemyScriptable: {fileID: 11400000, guid: 44e182f3c0d752749b654ea50d117b92, type: 2}
-  enemyMovement: {fileID: 114618006531816300}
+  enemyMovement: {fileID: 114147625039822496}
   enemyAttractor: {fileID: 114676292694083772}
+  incomeingData: {fileID: 114420266782088560}
   stats: {fileID: 114059759199078698}
 --- !u!212 &212113918817408056
 SpriteRenderer:
