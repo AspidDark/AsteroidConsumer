@@ -25,6 +25,7 @@ namespace TimB
             instance = instance ?? this;
             InvokeRepeating("OnTimerEverySecond", 1f, 1f);
             InvokeRepeating("OnTimerEveryHalfSecond", 1f, .5f);
+            InvokeRepeating("OnTimerEvery250Millisecond", 1f, .25f);
         }
 
         // Update is called once per frame
@@ -105,6 +106,16 @@ namespace TimB
             if (TimerEveryHalfSecond != null)
             {
                 TimerEveryHalfSecond(this, EventArgs.Empty);
+            }
+        }
+
+        public EventHandler<EventArgs> TimerEvery250Millisecond;
+
+        protected virtual void OnTimerEvery250Millisecond()
+        {
+            if (TimerEvery250Millisecond != null)
+            {
+                TimerEvery250Millisecond(this, EventArgs.Empty);
             }
         }
 

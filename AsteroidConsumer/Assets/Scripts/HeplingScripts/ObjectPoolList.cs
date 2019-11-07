@@ -85,17 +85,17 @@ namespace TimB
             }
             return null;
         }
-        public GameObject GetPooledObjectWithData(string tag, Vector3 position, Quaternion rotation, object data, bool canGrow = false, bool activate=true)
+        public GameObject GetPooledObjectWithData(string tag, Vector3 position, Quaternion rotation, BaseDTO data, bool canGrow = false, bool activate=true)
         {
             GameObject go = GetPooledObject(tag, position, rotation, canGrow, activate);
-            go.GetComponent<DataReceiver>().ReceiveData(data);
+            go.GetComponent<DataReciverBase>().ReceiveData(data);
 
             return go;
         }
 
 
 
-        public GameObject GeneratePositionedObject(string tag, object data, Vector3 position, Quaternion quaternion, bool activate = true, bool canGrow = false)
+        public GameObject GeneratePositionedObject(string tag, BaseDTO data, Vector3 position, Quaternion quaternion, bool activate = true, bool canGrow = false)
         {
             if (!pooledListDictionary.ContainsKey(tag))
             {
@@ -109,7 +109,7 @@ namespace TimB
                     objectToSpawn.transform.position = position;
                     objectToSpawn.transform.rotation = quaternion;
                     objectToSpawn.SetActive(activate);
-                    objectToSpawn.GetComponent<DataReceiver>().ReceiveData(data);
+                    objectToSpawn.GetComponent<DataReciverBase>().ReceiveData(data);
                     return objectToSpawn;
                 }
             }
@@ -120,7 +120,7 @@ namespace TimB
                 objectToSpawn.transform.position = position;
                 objectToSpawn.transform.rotation = quaternion;
                 objectToSpawn.SetActive(activate);
-                objectToSpawn.GetComponent<DataReceiver>().ReceiveData(data);
+                objectToSpawn.GetComponent<DataReciverBase>().ReceiveData(data);
                 return objectToSpawn;
             }
             return null;

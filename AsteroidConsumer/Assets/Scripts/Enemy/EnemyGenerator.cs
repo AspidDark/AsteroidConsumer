@@ -22,7 +22,12 @@ public class EnemyGenerator : MonoBehaviour
     #endregion
     public bool CanSpawn { get; set; }
 
-    // Use this for initialization
+    public List<AllActiveObjectsData> AllActiveObjects { get; private set; }
+    private void Awake()
+    {
+        AllActiveObjects = new List<AllActiveObjectsData>();
+    }
+
 
     void Start()
     {
@@ -36,13 +41,25 @@ public class EnemyGenerator : MonoBehaviour
         }
         else
         {
-            GeterateStartingEnemy();
+            GenerateStartingEnemy();
         }
       //  HeightCheckTimerUpdate();
 
     }
 
-    private void GeterateStartingEnemy()
+    public void AddObject(AllActiveObjectsData activeObjectData)
+    {
+        if(!AllActiveObjects.Contains(activeObjectData))
+        AllActiveObjects.Add(activeObjectData);
+    }
+    public void RemoveObject(AllActiveObjectsData activeObjectData)
+    {
+        AllActiveObjects.Remove(activeObjectData);
+    }
+
+
+
+    private void GenerateStartingEnemy()
     {
         foreach (var item in startingEnemyObjectSpawnSettings)
         {
@@ -57,7 +74,7 @@ public class EnemyGenerator : MonoBehaviour
     //
 
    
-
+        //не нравится...
     private void GenerateDynamicEnemy(object sender, EventArgs e)
     {
         if (CanSpawn)
@@ -68,7 +85,7 @@ public class EnemyGenerator : MonoBehaviour
             float enemyYposition = AllObjectData.instance.posY + (MainCount.instance.FloatRandom(fromPlayerToSpawnMin, fromPlayerToSpawnMax) + AllIndependentData.instance.cameraYHeight)
                 *(MainCount.instance.BoolRandom() ? 1 : -1);
             //generate Left??
-            float enemyXposition = AllObjectData.instance.posX + (MainCount.instance.FloatRandom(fromPlayerToSpawnMin, fromPlayerToSpawnMax) + AllIndependentData.instance.cameraXWidth)//!!!!! add X widh!!!
+            float enemyXposition = AllObjectData.instance.posX + (MainCount.instance.FloatRandom(fromPlayerToSpawnMin, fromPlayerToSpawnMax) + AllIndependentData.instance.cameraXWidth)
                 * (MainCount.instance.BoolRandom() ? 1 : -1);
             ObjectPoolList.instance.GetPooledObject(dynamicEnemyObjectSpawnSettings[enemyToSpawn].enemyName, new Vector3(enemyXposition, enemyYposition, 0), Quaternion.identity, true);
         }

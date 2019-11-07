@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb0b9b2a282f0f74d8015c6f58e99b8f, type: 3}
+  m_Name: BaseEnemyWithAttracor
+  m_EditorClassIdentifier: 
+  enemyName: Planet
+  replacedByNames: []
+  enemyMassMin: 6890
+  enemyMassMax: 7326
+  speedMin: 0
+  speedMax: 0
+  isRandomMpvement: 0
+  minConsumeValue: 91.9
+  maxConsumeValue: 100
+  minSolidValue: 444
+  maxSolidValue: 532
+  changeDirection: 0
+  changeDirectionSpeedMin: 0
+  changeDirectionSpeedMax: 0
+  hasGavity: 1
+  minGravityValue: 0
+  maxGravityValue: 0
+  enemyType: 8
+  consumeType: 0

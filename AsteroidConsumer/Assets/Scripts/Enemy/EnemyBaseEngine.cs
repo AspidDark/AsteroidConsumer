@@ -46,6 +46,16 @@ public class EnemyBaseEngine : MonoBehaviour
 
     private void EnableInitiation()
     {
+        if (EnemyGenerator.instance != null)
+        {
+            AllActiveObjectsData allActiveObjectData = new AllActiveObjectsData
+            {
+                go=gameObject,
+                rb2d= rb2d,
+                mass = stats.mass
+            };
+            EnemyGenerator.instance.AddObject(allActiveObjectData);
+        }
         if (MainCount.instance != null)
         {
             float mass = MainCount.instance.FloatRandom(enemyScriptable.enemyMassMin, enemyScriptable.enemyMassMax);
@@ -81,8 +91,14 @@ public class EnemyBaseEngine : MonoBehaviour
     }
     private void OnDisable()
     {
+        AllActiveObjectsData allActiveObjectData = new AllActiveObjectsData
+        {
+            go = gameObject,
+            rb2d = rb2d,
+            mass= stats.mass
+        };
         //MainCount.instance.TimerEverySecond -= MakeGravity;//1
-
+        EnemyGenerator.instance.RemoveObject(allActiveObjectData);
         if (ClosestObject.instance == null)
         {
             return;
