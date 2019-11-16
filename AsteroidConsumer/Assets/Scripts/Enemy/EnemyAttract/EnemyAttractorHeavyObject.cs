@@ -8,7 +8,6 @@ public class EnemyAttractorHeavyObject : EnemyAttractorBase
 {
     public override void StartAttraction(GameObject go, EnemyStats stats)
     {
-        print("StartAttraction");
         base.StartAttraction(go, stats);
         MainCount.instance.TimerEvery250Millisecond += DoAttarct;
     }
@@ -18,11 +17,12 @@ public class EnemyAttractorHeavyObject : EnemyAttractorBase
     {
         float force = CountForce();
         var goInAttractionRange = EnemyGenerator.instance.AllActiveObjects.
-            Where(x => !MainCount.instance.IsOutRanged(x.go.transform, _go.transform, _stats.gravityRange));
+            Where(x => !MainCount.instance.IsOutRanged(x.Value.go.transform, _go.transform, _stats.gravityRange)
+            &&(x.Value.objectId!=_stats.objectId))
+            .Select(x=>x.Value);//.ToDictionary(x => x.Key, x => x.Value).Values.ToList();
         //TO DO Attrct here
         foreach (var item in goInAttractionRange)
         {
-            print("Attractor mass:" + item.mass);
             AddForce(item, force);
         }
     }

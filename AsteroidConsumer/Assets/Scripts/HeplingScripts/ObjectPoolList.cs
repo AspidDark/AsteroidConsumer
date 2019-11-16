@@ -22,10 +22,7 @@ namespace TimB
         private void Awake()
         {
             instance = instance ?? this;
-        }
-        // Use this for initialization
-        void Start()
-        {
+
             pooledListDictionary = new Dictionary<string, List<GameObject>>();
             foreach (var pool in pools)
             {
@@ -49,6 +46,11 @@ namespace TimB
                 pooledListDictionary.Add(poolName, objectPool);
             }
         }
+        // Use this for initialization
+        void Start()
+        {
+          
+        }
         /// <summary>
         /// Get Object from pool
         /// </summary>
@@ -57,7 +59,7 @@ namespace TimB
         /// <param name="rotation">rotation to set object at</param>
         /// <param name="canGrow">will object pool grow?</param>
         /// <returns></returns>
-        public GameObject GetPooledObject(string tag, Vector3 position, Quaternion rotation, bool canGrow = false, bool activate=true)
+        public GameObject GetPooledObject(string tag, Vector3 position, Quaternion rotation, bool canGrow = false, bool activate = true)
         {
             if (!pooledListDictionary.ContainsKey(tag))
             {
@@ -85,7 +87,7 @@ namespace TimB
             }
             return null;
         }
-        public GameObject GetPooledObjectWithData(string tag, Vector3 position, Quaternion rotation, BaseDTO data, bool canGrow = false, bool activate=true)
+        public GameObject GetPooledObjectWithData(string tag, Vector3 position, Quaternion rotation, BaseDTO data, bool canGrow = false, bool activate = true)
         {
             GameObject go = GetPooledObject(tag, position, rotation, canGrow, activate);
             go.GetComponent<DataReciverBase>().ReceiveData(data);
@@ -95,7 +97,14 @@ namespace TimB
 
 
 
-        public GameObject GeneratePositionedObject(string tag, BaseDTO data, Vector3 position, Quaternion quaternion, bool activate = true, bool canGrow = false)
+        public GameObject GeneratePositionedObjectWithData(string tag, BaseDTO data, Vector3 position, Quaternion quaternion, bool activate = true)
+        {
+            GameObject go = GeneratePositionedObject(tag, position, quaternion, activate);
+            go.GetComponent<DataReciverBase>().ReceiveData(data);
+            return go;
+        }
+
+        public GameObject GeneratePositionedObject(string tag, Vector3 position, Quaternion quaternion, bool activate = true)
         {
             if (!pooledListDictionary.ContainsKey(tag))
             {
@@ -103,24 +112,10 @@ namespace TimB
             }
             foreach (var item in pooledListDictionary[tag])
             {
-                if (!item.activeInHierarchy)
-                {
-                    GameObject objectToSpawn = item;
-                    objectToSpawn.transform.position = position;
-                    objectToSpawn.transform.rotation = quaternion;
-                    objectToSpawn.SetActive(activate);
-                    objectToSpawn.GetComponent<DataReciverBase>().ReceiveData(data);
-                    return objectToSpawn;
-                }
-            }
-            if (canGrow)
-            {
-                GameObject objectToSpawn = Instantiate(pooledListDictionary[tag].First());
-                pooledListDictionary[tag].Add(objectToSpawn);
+                GameObject objectToSpawn = item;
                 objectToSpawn.transform.position = position;
                 objectToSpawn.transform.rotation = quaternion;
                 objectToSpawn.SetActive(activate);
-                objectToSpawn.GetComponent<DataReciverBase>().ReceiveData(data);
                 return objectToSpawn;
             }
             return null;

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using TimB;
 using UnityEngine;
 
@@ -15,7 +13,7 @@ public class BaseDistanseCheck  {
 
     protected virtual void CheckDestroy(object sender, EventArgs e)//2
     {
-        if ((Mathf.Abs(_enemyBaseEngine.transform.position.x - AllObjectData.instance.posX) > AllIndependentData.instance.cameraXWidth * 2) ||
+        if (/*(Mathf.Abs(_enemyBaseEngine.transform.position.x - AllObjectData.instance.posX) > AllIndependentData.instance.cameraXWidth * 4) ||*/
             MainCount.instance.
             IsOutRanged(_enemyBaseEngine.transform, AllObjectData.instance.go.transform, ConstsLibrary.maxObjectDistance))
         {

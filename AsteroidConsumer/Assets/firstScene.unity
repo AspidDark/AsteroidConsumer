@@ -266,7 +266,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 555964787}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0000011920929, y: -0.00000023841858, z: -5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -346,6 +346,10 @@ Prefab:
       propertyPath: impulseMuliplyer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1706239782978126, guid: 8a3de3eca5663324489c825a8b575a2e, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8a3de3eca5663324489c825a8b575a2e, type: 2}
   m_IsPrefabParent: 0
@@ -397,7 +401,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 858019961}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0000011920929, y: -0.00000023841858, z: -5}
+  m_LocalPosition: {x: -0.0000014305115, y: -0.00000023841858, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 88971947}
@@ -644,11 +648,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectSpawnOffset: 2
-  startingEnemyObjectSpawnSettings: []
-  dynamicEnemyObjectSpawnSettings: []
+  startingEnemyObjectSpawnSettings:
+  - {fileID: 11400000, guid: 6dc3e0a5e3fd7594d9c2eaf219c4edbb, type: 2}
+  - {fileID: 11400000, guid: 876d88ea009a49e42a7b51ad12fb8826, type: 2}
+  - {fileID: 11400000, guid: 73c83305698f82d429146891b6658031, type: 2}
+  staticGameObjects: []
+  dynamicEnemyObjectSpawnSettings:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   fromPlayerToSpawnMax: 15
   fromPlayerToSpawnMin: 10
   rangeToCount: 100
+  showAllData: []
 --- !u!4 &1302024601
 Transform:
   m_ObjectHideFlags: 0
@@ -717,6 +729,10 @@ Prefab:
       value: 
       objectReference: {fileID: 11400000, guid: ca8a27894b1769342bcae675848e630b,
         type: 2}
+    - target: {fileID: 1037302898168790, guid: 499ba74ffa268674b9df29c4815d9060, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 499ba74ffa268674b9df29c4815d9060, type: 2}
   m_IsPrefabParent: 0
@@ -932,6 +948,15 @@ MonoBehaviour:
   - tag: Burst
     prefab: {fileID: 1353347370528490, guid: 5b44807caaa5414498002fadb0b60ac1, type: 2}
     size: 5
+  - tag: R
+    prefab: {fileID: 1706239782978126, guid: 4b3a7d95c1176c045a4962b9662da440, type: 2}
+    size: 1
+  - tag: G
+    prefab: {fileID: 1706239782978126, guid: f04bdff7c3a501749a1670545d22ac4b, type: 2}
+    size: 1
+  - tag: B
+    prefab: {fileID: 1706239782978126, guid: a5420e63d144e0c47a6d549b3b1d8003, type: 2}
+    size: 1
 --- !u!4 &1676617545
 Transform:
   m_ObjectHideFlags: 0

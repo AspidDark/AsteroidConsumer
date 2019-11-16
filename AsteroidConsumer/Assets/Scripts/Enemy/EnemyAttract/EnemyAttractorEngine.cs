@@ -5,7 +5,6 @@ public class EnemyAttractorEngine : MonoBehaviour {
     private EnemyAttractorBase _enemyAttractorBase;
     public void Attract(GameObject go, EnemyStats stats)
     {
-        print("Attractor class");
         _enemyAttractorBase = go.GetComponent<EnemyAttractorBase>();
         if (_enemyAttractorBase == null)
         {

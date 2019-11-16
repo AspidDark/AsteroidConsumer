@@ -13,7 +13,8 @@ public class EnemyGenerator : MonoBehaviour
 
     #region HeightCheck
     public EnemyObjectSpawnSettings[] startingEnemyObjectSpawnSettings;
-    private List<GameObject> staticGameObjects;
+    [SerializeField]
+    private GameObject[] staticGameObjects;
     public EnemyObjectSpawnSettings[] dynamicEnemyObjectSpawnSettings;
 
     public float fromPlayerToSpawnMax = 15;
@@ -22,17 +23,21 @@ public class EnemyGenerator : MonoBehaviour
     #endregion
     public bool CanSpawn { get; set; }
 
-    public List<AllActiveObjectsData> AllActiveObjects { get; private set; }
+    public Dictionary<Guid, AllActiveObjectsData> AllActiveObjects { get; private set; }
+    [SerializeField]
+    public List<ShowAllData> showAllData = new List<ShowAllData>();
     private void Awake()
     {
-        AllActiveObjects = new List<AllActiveObjectsData>();
+        instance = instance ?? this;
+        AllActiveObjects = new Dictionary<Guid, AllActiveObjectsData>();
+        staticGameObjects = new GameObject[startingEnemyObjectSpawnSettings.Length];
     }
 
 
     void Start()
     {
-        instance = instance ?? this;
-        staticGameObjects = new List<GameObject>();
+        //add all existing objects to AllActiveObjects
+        
         MainCount.instance.TimerEverySecond += GenerateDynamicEnemy;
         MainCount.instance.TimerEverySecond += GenerateStaticEnemy;
         if (startingEnemyObjectSpawnSettings == null || startingEnemyObjectSpawnSettings.Length == 0)
@@ -49,24 +54,36 @@ public class EnemyGenerator : MonoBehaviour
 
     public void AddObject(AllActiveObjectsData activeObjectData)
     {
-        if(!AllActiveObjects.Contains(activeObjectData))
-        AllActiveObjects.Add(activeObjectData);
+        if (AllActiveObjects.ContainsKey(activeObjectData.objectId))
+        {
+            RemoveObject(activeObjectData.objectId);
+        }
+        AllActiveObjects.Add(activeObjectData.objectId, activeObjectData);
+       // UpdateList();
     }
-    public void RemoveObject(AllActiveObjectsData activeObjectData)
+    public void RemoveObject(Guid objectId)
     {
-        AllActiveObjects.Remove(activeObjectData);
+        AllActiveObjects.Remove(objectId);
+       // UpdateList();
     }
 
 
 
     private void GenerateStartingEnemy()
     {
-        foreach (var item in startingEnemyObjectSpawnSettings)
+        //print
+        for (int i = 0; i < startingEnemyObjectSpawnSettings.Length; i++)
         {
-           GameObject generated=  ObjectPoolList.instance.
-                GetPooledObject(item.enemyName, new Vector3(item.xPosition, item.yPosition, 0), Quaternion.identity, true, false);
-            staticGameObjects.Add(generated);
+            staticGameObjects[i]= ObjectPoolList.instance.
+                GeneratePositionedObject(startingEnemyObjectSpawnSettings[i].enemyName, new Vector3(startingEnemyObjectSpawnSettings[i].xPosition
+                , startingEnemyObjectSpawnSettings[i].yPosition, 0), Quaternion.identity, false);
         }
+        //foreach (var item in startingEnemyObjectSpawnSettings)
+        //{
+        //   GameObject generated=  ObjectPoolList.instance.
+        //        GetPooledObject(item.enemyName, new Vector3(item.xPosition, item.yPosition, 0), Quaternion.identity, true, false);
+        //    staticGameObjects.Add(generated);
+        //}
         GenerateStaticEnemy(new object(), new EventArgs());
     }
     //проверяем позицию игрока и если он близко к краю сгенеренного поля генерим еще объекты
@@ -96,97 +113,31 @@ public class EnemyGenerator : MonoBehaviour
     {
         foreach (var item in staticGameObjects)
         {
-            item.SetActive(!MainCount.instance.
-            IsOutRanged(item.transform, AllObjectData.instance.go.transform, ConstsLibrary.maxObjectDistance));
+            //if (!MainCount.instance.
+            //IsOutRanged(item.transform, AllObjectData.instance.go.transform, ConstsLibrary.maxObjectDistance))
+            //{
+            //item.SetActive(true);
+            //}
+
+                item.SetActive(!MainCount.instance.IsOutRanged(item.transform, AllObjectData.instance.go.transform, ConstsLibrary.maxObjectDistance));
+
         }
     }
 
-    //public void HeightCheckTimerUpdate()
-    //{
-    //    foreach (var item in dynamicEnemyObjectSpawnSettings)
-    //    {
-    //        item.heightCheckTimer = item.timeBetweenHeightChecks;
-    //    }
-    //}
+    public void UpdateList()
+    {
+        showAllData.Clear();
+        foreach (var item in AllActiveObjects.Values)
+        {
+            showAllData.Add(new ShowAllData
+            {
+                go=item.go,
+                mass=item.mass,
+                objectId=item.objectId.ToString()
+            });
+        }
 
-    //private void SpawnFlyingObject(string enemyName)
-    //{
-    //    //print(poolName);
-    //    //Geting List of Objects whitch can be spawned on player's Height
-    //    List<EnemyObjectSpawnSettings> listOfObjectsOnThisHeight = new List<EnemyObjectSpawnSettings>();
-    //    var listOfAirObjects = enemyObjectSpawnSettings.FirstOrDefault(n => n.enemyName == enemyName);
-    //    foreach (var item in listOfAirObjects.airObjectList)
-    //    {
-    //        if (AllObjectData.instance.posY <= item.maxHeight
-    //            && AllObjectData.instance.posY >= item.minHeight)
-    //        {
-    //            listOfObjectsOnThisHeight.Add(item);
-    //        }
-    //    }
-    //    //If no object found
-    //    if (listOfObjectsOnThisHeight == null || listOfObjectsOnThisHeight.Count == 0)
-    //    {
-    //        return;
-    //    }
-    //    //Object flies from left to right?
-    //    float objectXposition;
-    //    if (MainCount.instance.BoolRandom())
-    //    {
-    //        objectXposition = -nodeInformer.cameraXWidth - objectSpawnOffset;
-    //    }
-    //    else
-    //    {
-    //        objectXposition = nodeInformer.cameraXWidth + objectSpawnOffset;
-    //    }
-    //    int[] airObjectWeights = new int[listOfObjectsOnThisHeight.Count];
-    //    for (int i = 0; i < listOfObjectsOnThisHeight.Count; i++)
-    //    {
-    //        airObjectWeights[i] = listOfObjectsOnThisHeight[i].spawnChance;
-    //    }
-    //    int numberOfObjectToSpawn = MainCount.instance.DifferentWeightRandom(airObjectWeights);//mainCount.IntegerRandom(0, listOfObjectsOnThisHeight.Count);
-
-    //    float startingYposToSpawn = MainCount.instance.FloatRandom(higherFromPlayerToSpawnMin, higherFromPlayerToSpawnMax);
-
-    //    if ((AllObjectData.instance.gameobjectVelocity.x * AllObjectData.instance.gameobjectVelocity.x > ConstsLibrary.speedSquareAferSpawnObjectOnMinHeight))
-    //    {
-    //        startingYposToSpawn = MainCount.instance.FloatRandom(-ConstsLibrary.heightToSpawnWhenXisHigh, ConstsLibrary.heightToSpawnWhenXisHigh);
-
-    //    }
-    //    if (AllObjectData.instance.gameobjectVelocity.y < 0 && AllObjectData.instance.posY > higherFromPlayerToSpawnMax)
-    //    {
-    //        startingYposToSpawn *= -1;
-    //    }
-    //    string name = listOfObjectsOnThisHeight[numberOfObjectToSpawn].objectName;
-    //    float xPosition;
-    //    if (AllObjectData.instance.gameobjectVelocity.x >= 0)
-    //    {
-    //        if (objectXposition < 0)
-    //        {
-    //            xPosition = AllObjectData.instance.posX + objectXposition;
-    //        }
-    //        else
-    //        {
-    //            xPosition = AllObjectData.instance.posX + objectXposition + AllObjectData.instance.gameobjectVelocity.x;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (objectXposition > 0)
-    //        {
-    //            xPosition = AllObjectData.instance.posX + objectXposition;
-    //        }
-    //        else
-    //        {
-    //            xPosition = AllObjectData.instance.posX + objectXposition + AllObjectData.instance.gameobjectVelocity.x;
-    //        }
-    //    }
-
-
-    //    Vector3 position = new Vector3(xPosition//AllObjectData.instance.posX + objectXposition + AllObjectData.instance.gameobjectVelocity.x
-    //        , AllObjectData.instance.posY + startingYposToSpawn + AllObjectData.instance.gameobjectVelocity.y);
-    //    objectPoolList.GetPooledObject(name, position, Quaternion.identity, true); ///SpawningObject
-    //}
-
+    }
     private void OnDestroy()
     {
         MainCount.instance.TimerEverySecond -= GenerateDynamicEnemy;

@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class EnemyStats : MonoBehaviour
 {
+    public Guid objectId;
+
     public float mass;
     public float consumePercentage;
     public float solidValue;

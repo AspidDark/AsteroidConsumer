@@ -1,11 +1,13 @@
-﻿using System;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class AllActiveObjectsData
+public class ShowAllData
 {
-    public Guid objectId;
+    public string objectId;
     public GameObject go;
     public Rigidbody2D rb2d;
     public float mass;
+
 }
