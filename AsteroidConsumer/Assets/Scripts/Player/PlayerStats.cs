@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerStats : MonoBehaviour {
 
@@ -13,21 +11,51 @@ public class PlayerStats : MonoBehaviour {
     public GameObject hook;
     public Rigidbody2D hookRigitbody;
     public LineRenderer hookRenderer;
+    public CircleCollider2D circleCollider;
 
-    public float PlayerMass
+    #region staring Values
+    public float startingMass = 30;
+    public float startingRadius = 0.3f;
+
+    public float startMaxDragDistance = 2f;
+    public float startcanInteractTime = 2f;
+
+    public float forceMultypuer = 2f;
+    #endregion
+
+    #region currentValues
+    private float maxDragDistance;
+    public float MaxDragDistance
     {
-        get
-        { return playerMass; }
-        set
-        {
-            playerMass = value;
-            rb.mass = value;
-        }
+        get { return maxDragDistance; }
+
+        set { maxDragDistance = value; }
     }
-    private float playerMass;
 
+    private float canInteractTime;
+    public float CanInteractTime
+    {
+        get { return canInteractTime; }
 
-    private void Start()
+        set { canInteractTime = value; }
+    }
+    private float mass;
+
+    public float Mass
+    {
+        get { return mass; }
+        set { mass = value; rb.mass = value; }
+    }
+    private float radius;
+
+    public float Radius
+    {
+        get { return radius; }
+        set { radius = value; circleCollider.radius = value; }
+    }
+    #endregion
+
+    private void Awake()
     {
         StartingInitiation();
     }
@@ -40,15 +68,15 @@ public class PlayerStats : MonoBehaviour {
         hookRenderer = hookRenderer ?? hook.GetComponent<LineRenderer>();
         hookRigitbody = hookRigitbody ?? hook.GetComponent<Rigidbody2D>();
         hookAimRenderer = hookAimRenderer ?? hookAim.GetComponent<LineRenderer>();
+        SetStaringValues();
+
     }
-
-
-    #region debug
-    public float playerMassShow;
-    private void Update()
+    private void SetStaringValues()
     {
-        playerMassShow = PlayerMass;
+        Mass = startingMass;
+        Radius = startingRadius;
+        MaxDragDistance = startMaxDragDistance;
+        CanInteractTime = startcanInteractTime;
     }
-    #endregion
 
 }

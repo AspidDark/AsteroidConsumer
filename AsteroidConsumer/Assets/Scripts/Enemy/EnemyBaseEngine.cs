@@ -18,9 +18,16 @@ public class EnemyBaseEngine : MonoBehaviour
 
     //private IEnemyBehavior behavior;
     private EnemyFactory enemyFactory;
+    #region Sprite Size And Sound
+    public SpriteRenderer spriteRenderer;
+    public CircleCollider2D circleCollider;
+    #endregion
+
     private void Awake()
     {
         stats.objectId = Guid.NewGuid();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        circleCollider = gameObject.GetComponent<CircleCollider2D>();
     }
 
     // Use this for initialization
@@ -39,7 +46,7 @@ public class EnemyBaseEngine : MonoBehaviour
 
     private void OnEnable()
     {
-       
+
         EnableInitiation();
     }
 
@@ -77,7 +84,7 @@ public class EnemyBaseEngine : MonoBehaviour
             stats.enemyType = EnemyTypeCounter.GetEnemyType(mass, stats.solidValue);
             stats.isRandomMovement = enemyScriptable.isRandomMpvement;
             ChangeType(stats.enemyType);
-            
+
             enemyMovement.Move(rb2d, stats);
 
             BaseDistanseCheck baseDistanseCheck = new BaseDistanseCheck(this);
@@ -137,10 +144,10 @@ public class EnemyBaseEngine : MonoBehaviour
                     stats = stats,
                     destroyedEnemyPosition = this.transform.position,
                     collisionPoint = collisionPoint,
-                    numberOfObject=i
+                    numberOfObject = i
                 };
                 ObjectPoolList.
-                    instance.GetPooledObjectWithData(enemyScriptable.replacedByNames[i], gameObject.transform.position, 
+                    instance.GetPooledObjectWithData(enemyScriptable.replacedByNames[i], gameObject.transform.position,
                   gameObject.transform.rotation, enemyToReplacersDTO, true, false);
             }
         }
@@ -166,7 +173,7 @@ public class EnemyBaseEngine : MonoBehaviour
                     case InitiatorCollisionResult.otherDestroyed:
                         Rize(result);
 
-                        if (result.FullyConsumed) { otherEngine.Deactivate();}
+                        if (result.FullyConsumed) { otherEngine.Deactivate(); }
                         else { otherEngine.Deactivate(collisionPoint); }
 
                         break;
@@ -180,8 +187,8 @@ public class EnemyBaseEngine : MonoBehaviour
                     case InitiatorCollisionResult.initiatorDestroyed:
                         otherEngine.Rize(result);//&&
 
-                        if (result.FullyConsumed) { Deactivate();}
-                        else { Deactivate(collisionPoint);}
+                        if (result.FullyConsumed) { Deactivate(); }
+                        else { Deactivate(collisionPoint); }
 
                         break;
                     default:
@@ -213,11 +220,19 @@ public class EnemyBaseEngine : MonoBehaviour
 
     private void ChangeType(EnemyType newEnemyType)//2
     {
-            EnemyAbiliteesCounter enemyAbiliteesCounter = new EnemyAbiliteesCounter();
-            EnemyAbiliteesDTO enemyAbiliteesDTO = enemyAbiliteesCounter.GetEnemyAbilitees(newEnemyType);
-            stats.hasGavity = enemyAbiliteesDTO.hasGavity;
-            stats.gravityRange = enemyAbiliteesDTO.gravityRange;
-            stats.gravityValue = enemyAbiliteesDTO.gravityValue;
-            enemyAttractor.Attract(gameObject, stats);
+        EnemyAbiliteesCounter enemyAbiliteesCounter = new EnemyAbiliteesCounter();
+        EnemyAbiliteesDTO enemyAbiliteesDTO = enemyAbiliteesCounter.GetEnemyAbilitees(newEnemyType);
+        stats.hasGavity = enemyAbiliteesDTO.hasGavity;
+        stats.gravityRange = enemyAbiliteesDTO.gravityRange;
+        stats.gravityValue = enemyAbiliteesDTO.gravityValue;
+        enemyAttractor.Attract(gameObject, stats);
+        if (stats.enemyType != newEnemyType)
+        {
+            //image here
+            stats.enemyType = EnemyTypeCounter.GetEnemyType(stats.mass, stats.solidValue);
+            EnemyParametaers parametaers = EnemyParametersLibrary.instance.GetEnemyParametaers(stats.enemyType);
+            spriteRenderer.sprite = parametaers.sprite;
+            circleCollider.radius = parametaers.colliderRadius;
+        }
     }
 }
