@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TimB;
 using UnityEngine;
 
 
@@ -10,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     #region Drawing aim and circle
     LineRenderer circle;
     LineRenderer line;
-    public GameObject spriteShower;
+   // public GameObject spriteShower;
     #endregion
     private SpringJoint2D springJoint2D;
 
@@ -54,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
             line = rendererTool.DrawLine(PlayerStats.instance.hookAimRenderer, PlayerStats.instance.hook.transform.position, gameObject.transform.position, PlayerStats.instance.MaxDragDistance);
             #region Player SizeChanger
             distance = Vector3.Distance(PlayerStats.instance.hook.transform.position, gameObject.transform.position);
-            DecreaseVisually(distance);
+            PlayerEffects.instance.DecreaseVisually(distance, gameObject.transform);
             #endregion
         }
     }
@@ -93,7 +94,8 @@ public class PlayerMovement : MonoBehaviour
         if (realeaseCanInteract)
         {
             #region Player SizeChanger
-            SizeDecreaser(distance);
+
+            PlayerEffects.instance.SizeAndMassDecreaser(distance, gameObject.transform);
 
 
             distance = 0;
@@ -135,20 +137,26 @@ public class PlayerMovement : MonoBehaviour
         PlayerStats.instance.rb.angularVelocity = 0;
     }
 
-    private void SizeDecreaser(float value)
+    public void AddForce(Vector2 direction)
     {
-        float decreaseValue = value / 10;
-        float colliderRadiusDecreaser = PlayerStats.instance.circleCollider.radius * decreaseValue;
-        PlayerStats.instance.circleCollider.radius -= colliderRadiusDecreaser;
-        Vector3 gameObjectSacaleDecreaser = gameObject.transform.localScale * decreaseValue;
-        gameObject.transform.localScale -= gameObjectSacaleDecreaser;
-        spriteShower.transform.localScale = new Vector3(1,1,1);
-
+        PlayerStats.instance.rb.AddForce(direction* 
+            PlayerStats.instance.Mass * PlayerStats.instance.forceMultypuer* AllObjectData.instance.speed, ForceMode2D.Impulse);
     }
 
-    private void DecreaseVisually(float value)
-    {
-        Vector3 gameObjectSacaleDecreaser = gameObject.transform.localScale * value/10;
-        spriteShower.transform.localScale= gameObject.transform.localScale- gameObjectSacaleDecreaser;
-    }
+    //private void SizeDecreaser(float value)
+    //{
+    //    float decreaseValue = value / 10;
+    //    float colliderRadiusDecreaser = PlayerStats.instance.circleCollider.radius * decreaseValue;
+    //    PlayerStats.instance.circleCollider.radius -= colliderRadiusDecreaser;
+    //    Vector3 gameObjectSacaleDecreaser = gameObject.transform.localScale * decreaseValue;
+    //    gameObject.transform.localScale -= gameObjectSacaleDecreaser;
+    //    spriteShower.transform.localScale = new Vector3(1,1,1);
+
+    //}
+
+    //private void DecreaseVisually(float value)
+    //{
+    //    Vector3 gameObjectSacaleDecreaser = gameObject.transform.localScale * value/10;
+    //    spriteShower.transform.localScale= gameObject.transform.localScale- gameObjectSacaleDecreaser;
+    //}
 }

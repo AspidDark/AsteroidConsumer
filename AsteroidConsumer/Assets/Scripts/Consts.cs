@@ -30,6 +30,14 @@ public static class Consts
     public const float consumeAndDestroyCompressionMulipluer = 1.2f;
     public const float destroyAndBitConsumeCompressionMulipluer = 1.1f;
 
+    #region Player consts
+    public const float playerFullConsumeSolidMultyplyer = 1.1f;
+    public const float playerFullConsumeMassMultyplyer = 0.8f;
+
+    public const float playerPartialConsumeSolidMultyplyer = 1.05f;
+    public const float playerPartialConsumeMassMultyplyer = 0.6f;
+    #endregion
+
 
 
 

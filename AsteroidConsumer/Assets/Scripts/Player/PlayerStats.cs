@@ -20,6 +20,8 @@ public class PlayerStats : MonoBehaviour {
     public float startMaxDragDistance = 2f;
     public float startcanInteractTime = 2f;
 
+    public float startingSolidValue = 10;
+
     public float forceMultypuer = 2f;
     #endregion
 
@@ -53,17 +55,26 @@ public class PlayerStats : MonoBehaviour {
         get { return radius; }
         set { radius = value; circleCollider.radius = value; }
     }
+
+    private float solidValue;
+
+    public float SolidValue
+    {
+        get { return solidValue; }
+        set { solidValue = value; }
+    }
+
     #endregion
 
     private void Awake()
     {
+        instance = instance ?? this;
         StartingInitiation();
     }
 
 
     private void StartingInitiation()
     {
-        instance = instance ?? this;
         rb = rb ?? GetComponent<Rigidbody2D>();
         hookRenderer = hookRenderer ?? hook.GetComponent<LineRenderer>();
         hookRigitbody = hookRigitbody ?? hook.GetComponent<Rigidbody2D>();
@@ -77,6 +88,7 @@ public class PlayerStats : MonoBehaviour {
         Radius = startingRadius;
         MaxDragDistance = startMaxDragDistance;
         CanInteractTime = startcanInteractTime;
+        SolidValue = startingSolidValue;
     }
 
 }
