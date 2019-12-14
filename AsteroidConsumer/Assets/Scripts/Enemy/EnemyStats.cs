@@ -9,7 +9,7 @@ public class EnemyStats : MonoBehaviour
     public float consumePercentage;
     public float solidValue;
 
-    public EnemyType enemyType;
+    public SpaceBodyType enemyType;
     public ConsumeType consumeType;
 
     public bool hasGavity;

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TimB;
 using UnityEngine;
 
 public class PlayerEffects : MonoBehaviour {
@@ -18,13 +19,8 @@ public class PlayerEffects : MonoBehaviour {
     public void SizeAndMassDecreaser(float value, Transform tr)
     {
         float decreaseValue = value / 10;
-        //  float colliderRadiusDecreaser = 
-        PlayerStats.instance.circleCollider.radius -= PlayerStats.instance.circleCollider.radius * decreaseValue;
-        // Vector3 gameObjectSacaleDecreaser = go.transform.localScale * decreaseValue;
-        tr.localScale -= tr.localScale * decreaseValue;
-        spriteShower.transform.localScale = new Vector3(1, 1, 1);
         PlayerStats.instance.Mass -= PlayerStats.instance.Mass * decreaseValue;
-
+        CheckMass();
     }
     /// <summary>
     /// Only for showing
@@ -33,8 +29,13 @@ public class PlayerEffects : MonoBehaviour {
     /// <param name="tr"></param>
     public void DecreaseVisually(float value, Transform tr)
     {
-        // Vector3 gameObjectSacaleDecreaser = tr.localScale * value / 10;
-        spriteShower.transform.localScale = tr.localScale * (10 - value) / 10;
+        float decreaseValue = (10 - value) / 10;
+        spriteShower.transform.localScale = new Vector3(decreaseValue, decreaseValue, decreaseValue);
+    }
+
+    public void RetirnVisualEffect(Transform tr)
+    {
+        spriteShower.transform.localScale = new Vector3(1,1,1);
     }
 
     public void GrowerUp(EnemyStats eatenEnemyStats, int enemyEatType)
@@ -54,17 +55,40 @@ public class PlayerEffects : MonoBehaviour {
             default:
                 break;
         }
-        CheckMassAndSolid();
-
-        //add mass
-        //add solid
-        //check mass=> change size
     }
 
-
-    private void CheckMassAndSolid()
+    public void CheckMass()
     {
-        //В зависимости от массы увеличиваем размер
-        // в зависимости от плотности меняем цвет
+        SpaceBodyType currentBotyType = PlayerStats.instance.spaceBodyType;
+        var newBodyType = MapMassToBodyType();
+        if (currentBotyType != newBodyType)
+        {
+            ChangeBodyTypeAccordingToMass(currentBotyType, newBodyType);
+            PlayerStats.instance.spaceBodyType = newBodyType;
+        }
+    }
+
+    private SpaceBodyType MapMassToBodyType()
+    {
+        for (int i = 0; i < Consts.mapBodyTypeToMass.Length; i++)
+        {
+            if (PlayerStats.instance.Mass < Consts.mapBodyTypeToMass[i])
+            {
+                return (SpaceBodyType)(i-1);
+            }
+        }
+        return SpaceBodyType.gigantBlackHole;
+    }
+
+    private void ChangeBodyTypeAccordingToMass(SpaceBodyType currntBodyType, SpaceBodyType newBodyType)
+    {
+        float difference = ((float)newBodyType -(float)currntBodyType) / 10;
+        AllObjectData.instance.go.transform.localScale = new Vector3(AllObjectData.instance.go.transform.localScale.x+difference, 
+            AllObjectData.instance.go.transform.localScale.y+difference, AllObjectData.instance.go.transform.localScale.z+difference);
+    }
+
+    public void CheckSolid()
+    {
+        //color
     }
 }

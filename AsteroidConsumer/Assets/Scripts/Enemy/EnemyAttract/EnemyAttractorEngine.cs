@@ -8,7 +8,7 @@ public class EnemyAttractorEngine : MonoBehaviour {
         _enemyAttractorBase = go.GetComponent<EnemyAttractorBase>();
         if (_enemyAttractorBase == null)
         {
-            if (stats.enemyType > EnemyType.moon)
+            if (stats.enemyType > SpaceBodyType.moon)
             {
                 _enemyAttractorBase = go.AddComponent<EnemyAttractorHeavyObject>();
             }

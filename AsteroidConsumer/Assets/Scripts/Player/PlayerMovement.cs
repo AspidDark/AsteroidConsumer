@@ -100,6 +100,8 @@ public class PlayerMovement : MonoBehaviour
 
             distance = 0;
             #endregion
+            PlayerEffects.instance.RetirnVisualEffect(gameObject.transform);
+
             countAimingLine = false;
             realeaseCanInteract = false;
             isPressed = false;
@@ -140,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
     public void AddForce(Vector2 direction)
     {
         PlayerStats.instance.rb.AddForce(direction* 
-            PlayerStats.instance.Mass * PlayerStats.instance.forceMultypuer* AllObjectData.instance.speed, ForceMode2D.Impulse);
+            PlayerStats.instance.Mass * PlayerStats.instance.forceMultypuer* AllObjectData.instance.speed*0.5f, ForceMode2D.Impulse);
     }
 
     //private void SizeDecreaser(float value)

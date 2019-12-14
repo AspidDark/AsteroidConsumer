@@ -13,7 +13,7 @@ public class EnemyParametersLibrary : MonoBehaviour {
 
     public EnemyParametaers [] enemyParametaers;
 
-    public EnemyParametaers GetEnemyParametaers(EnemyType enemyType)
+    public EnemyParametaers GetEnemyParametaers(SpaceBodyType enemyType)
     {
         List<EnemyParametaers> parametaersOfType = enemyParametaers.Where(x => x.enemyType == enemyType).ToList();
         int objectToSpawn = MainCount.instance.IntegerRandom(0, parametaersOfType.Count);

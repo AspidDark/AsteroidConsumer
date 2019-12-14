@@ -49,7 +49,7 @@ public class EnemyScriptable : ScriptableObject
     #endregion
 
     #region Enemy Type
-    public EnemyType enemyType;
+    public SpaceBodyType enemyType;
     public ConsumeType consumeType;
     #endregion
 

@@ -1,6 +1,6 @@
 ﻿public class EnemyAbiliteesCounter {
 
-    public EnemyAbiliteesDTO GetEnemyAbilitees(EnemyType enemyType)
+    public EnemyAbiliteesDTO GetEnemyAbilitees(SpaceBodyType enemyType)
     {
         EnemyAbiliteesDTO enemyAbiliteesDTO = new EnemyAbiliteesDTO
         {
@@ -10,35 +10,35 @@
         };
         switch (enemyType)
         {
-            case EnemyType.planet:
+            case SpaceBodyType.planet:
                 enemyAbiliteesDTO.hasGavity = true;
                 enemyAbiliteesDTO.gravityValue = 1;
                 break;
-            case EnemyType.gigantPlanet:
+            case SpaceBodyType.gigantPlanet:
                 enemyAbiliteesDTO.hasGavity = true;
                 enemyAbiliteesDTO.gravityValue = 2;
                 break;
-            case EnemyType.smallStar:
+            case SpaceBodyType.smallStar:
                 enemyAbiliteesDTO.hasGavity = true;
                 enemyAbiliteesDTO.gravityValue = 3;
                 break;
-            case EnemyType.star:
+            case SpaceBodyType.star:
                 enemyAbiliteesDTO.hasGavity = true;
                 enemyAbiliteesDTO.gravityValue = 4;
                 break;
-            case EnemyType.hugeStar:
+            case SpaceBodyType.hugeStar:
                 enemyAbiliteesDTO.hasGavity = true;
                 enemyAbiliteesDTO.gravityValue = 5;
                 break;
-            case EnemyType.quazar://6
+            case SpaceBodyType.quazar://6
                 enemyAbiliteesDTO.hasGavity = true;
                 enemyAbiliteesDTO.gravityValue = 6;
                 break;
-            case EnemyType.blackHole://8
+            case SpaceBodyType.blackHole://8
                 enemyAbiliteesDTO.hasGavity = true;
                 enemyAbiliteesDTO.gravityValue = 8;
                 break;
-            case EnemyType.gigantBlackHole:  //10
+            case SpaceBodyType.gigantBlackHole:  //10
                 enemyAbiliteesDTO.hasGavity = true;
                 enemyAbiliteesDTO.gravityValue = 10;
                 break;

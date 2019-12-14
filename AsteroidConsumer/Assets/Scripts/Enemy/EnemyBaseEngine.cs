@@ -218,7 +218,7 @@ public class EnemyBaseEngine : MonoBehaviour
         stats.solidValue = newSolid;
     }
 
-    private void ChangeType(EnemyType newEnemyType)//2
+    private void ChangeType(SpaceBodyType newEnemyType)//2
     {
         EnemyAbiliteesCounter enemyAbiliteesCounter = new EnemyAbiliteesCounter();
         EnemyAbiliteesDTO enemyAbiliteesDTO = enemyAbiliteesCounter.GetEnemyAbilitees(newEnemyType);

@@ -62,6 +62,7 @@ public static class Consts
     public const float starDecreaser = 0.25f;
     public const float planetDecreaser = 0.15f;
     public const float moonDecreaser = 0.1f;
+    public const float satelliteDecreaser = 0.07f;
     public const float cometDecreaser = 0.05f;
     //values
     public const float largeAsteroidMinMass = 400;
@@ -72,9 +73,14 @@ public static class Consts
     public const float bolidMinMass = 100f;
     #endregion
 
+
+    public static readonly float[] mapBodyTypeToMass = { 0, bolidMinMass, meteorMinMass, asteroidMinMass, largeAsteroidMinMass,
+    maxMass * cometDecreaser, maxMass * satelliteDecreaser, maxMass *moonDecreaser, maxMass * planetDecreaser, maxMass *(planetDecreaser+starDecreaser)*0.5f,
+    maxMass *(planetDecreaser+starDecreaser)*0.75f,  maxMass *starDecreaser,  maxMass * hugeStarMassDesreaser,
+    maxMass *(blackHoleCheckDecreaser+hugeStarMassDesreaser)*0.5f, maxMass *blackHoleCheckDecreaser,   maxMass *greatestBodyCheckDecreaser};
 }
 
-public enum EnemyType
+public enum SpaceBodyType
 {
     spaceTrash,
     bolid,
@@ -121,3 +127,5 @@ public enum EnemyGenerationType
     ifPlayerIsMoveingEvery1Sec,
     ifPlayerIsMoveingEvery2Sec,
 }
+
+

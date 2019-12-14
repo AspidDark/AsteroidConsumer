@@ -38,7 +38,7 @@
             + other.mass * other.solidValue) / (initator.mass + other.mass);
     }
 
-    public virtual EnemyType GetType(float mass, float solid)
+    public virtual SpaceBodyType GetType(float mass, float solid)
     {
         return EnemyTypeCounter.GetEnemyType(mass, solid);
     }
