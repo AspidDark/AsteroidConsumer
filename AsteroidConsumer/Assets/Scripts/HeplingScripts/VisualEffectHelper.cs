@@ -33,6 +33,11 @@ namespace TimB
         public static VisualEffectHelper instance;
         private List<int> visualEffectObjectId = new List<int>();
 
+        private void Awake()
+        {
+            instance = instance ?? this;
+        }
+
         // Use this for initialization
         void Start()
         {
@@ -154,6 +159,31 @@ namespace TimB
         }
         #endregion
 
+        public GrowSpeed GetColorGrowSpeed(float startingValue, Color32 startingColor, float endingValue, Color32 endingColor)
+        {
+            float delta = endingValue - startingValue;
+            print("delta" + delta);
+            GrowSpeed growSpeed = new GrowSpeed
+            {
+                redGrow = (endingColor.r - startingColor.r) / delta,
+                greenGrow = (endingColor.g - startingColor.g) / delta,
+                blueGrow = (endingColor.b - startingColor.b) / delta,
+                alphaGrow = (endingColor.a - startingColor.a) / delta
+            };
+            print("==growSpeed== growSpeed.redGrow=> " + growSpeed.redGrow + " growSpeed.greenGrow=> " + growSpeed.greenGrow+
+                "growSpeed.blueGrow =>" + growSpeed.blueGrow+ " growSpeed.alphaGrow=> " + growSpeed.alphaGrow); 
+            return growSpeed;
+        }
 
+        public Color32 GetFinalColor(Color32 startingColor, GrowSpeed growSpeed, float value)
+        {
+            print("startingColor=>" + startingColor+" value "+value);
+            byte red = Convert.ToByte(startingColor.r + growSpeed.redGrow * value);
+            byte green = Convert.ToByte(startingColor.g + growSpeed.greenGrow * value);
+            byte blue = Convert.ToByte(startingColor.b + growSpeed.blueGrow * value);
+            byte alpha = Convert.ToByte(startingColor.a + growSpeed.alphaGrow * value);
+            print("red "+ red+ " green "+green+" blue "+blue+" alpha "+alpha);
+            return new Color32(red, green, blue, alpha);
+        }
     }
 }

@@ -21,7 +21,7 @@ public static class Consts
     public const float maxConsumePercentage = 100;
 
     //SolidValue
-    public const float minSolidValue=-1000;
+    public const float minSolidValue= 1;
     public const float maxSolidValue = 1000;
 
 

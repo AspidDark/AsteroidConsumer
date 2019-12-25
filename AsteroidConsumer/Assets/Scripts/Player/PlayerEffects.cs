@@ -87,8 +87,8 @@ public class PlayerEffects : MonoBehaviour {
             AllObjectData.instance.go.transform.localScale.y+difference, AllObjectData.instance.go.transform.localScale.z+difference);
     }
 
-    public void CheckSolid()
+    public void CheckSolid(float solidValue)
     {
-        //color
+        PlayerStats.instance.spriteRenderer.color = VisualEffectHelper.instance.GetFinalColor(PlayerStats.instance.minSolidColor, PlayerStats.instance.growSpeed, solidValue);
     }
 }

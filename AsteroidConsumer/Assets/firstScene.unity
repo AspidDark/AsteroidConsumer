@@ -1379,6 +1379,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4953934537189946, guid: 4834f34742b3666459f5db40a518b514,
     type: 2}
   m_PrefabInternal: {fileID: 1591156290}
+--- !u!212 &861519630 stripped
+SpriteRenderer:
+  m_PrefabParentObject: {fileID: 212951550385131034, guid: 4834f34742b3666459f5db40a518b514,
+    type: 2}
+  m_PrefabInternal: {fileID: 1591156290}
 --- !u!114 &861519631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2209,6 +2214,42 @@ Prefab:
       propertyPath: circleCollider
       value: 
       objectReference: {fileID: 861519626}
+    - target: {fileID: 114210626660868736, guid: 4834f34742b3666459f5db40a518b514,
+        type: 2}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 861519630}
+    - target: {fileID: 114210626660868736, guid: 4834f34742b3666459f5db40a518b514,
+        type: 2}
+      propertyPath: minSolidColor.rgba
+      value: 4284233471
+      objectReference: {fileID: 0}
+    - target: {fileID: 114210626660868736, guid: 4834f34742b3666459f5db40a518b514,
+        type: 2}
+      propertyPath: maxSolidColor.rgba
+      value: 4290125825
+      objectReference: {fileID: 0}
+    - target: {fileID: 212951550385131034, guid: 4834f34742b3666459f5db40a518b514,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212090276736900912, guid: 4834f34742b3666459f5db40a518b514,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212951550385131034, guid: 4834f34742b3666459f5db40a518b514,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 79a5c11cd10829047a41a88497ad18e8,
+        type: 3}
+    - target: {fileID: 212090276736900912, guid: 4834f34742b3666459f5db40a518b514,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0.281
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4834f34742b3666459f5db40a518b514, type: 2}
   m_IsPrefabParent: 0
@@ -2906,6 +2947,7 @@ GameObject:
   - component: {fileID: 1856837651}
   - component: {fileID: 1856837654}
   - component: {fileID: 1856837655}
+  - component: {fileID: 1856837656}
   m_Layer: 0
   m_Name: HelpersObject
   m_TagString: Untagged
@@ -2983,6 +3025,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraXWidth: 0
   cameraYHeight: 0
+--- !u!114 &1856837656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1856837650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d995468b96607e9459c1ed070c9973e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  heightsAndColors: []
 --- !u!1001 &1862182096
 Prefab:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TimB;
+using UnityEngine;
 
 public class PlayerStats : MonoBehaviour {
 
@@ -34,6 +35,8 @@ public class PlayerStats : MonoBehaviour {
 
         set { maxDragDistance = value; }
     }
+
+    public float minDragDistance = 0.2f;
 
     private float canInteractTime;
     public float CanInteractTime
@@ -73,17 +76,30 @@ public class PlayerStats : MonoBehaviour {
         set { solidValue = value;
             if (PlayerEffects.instance != null)
             {
-                PlayerEffects.instance.CheckSolid();
+                PlayerEffects.instance.CheckSolid(solidValue);
             }
         }
     }
 
     #endregion
 
+    public Color32 minSolidColor;
+    public Color32 maxSolidColor;
+    public SpriteRenderer spriteRenderer;
+    public GrowSpeed growSpeed;
+
+
+
     private void Awake()
     {
         instance = instance ?? this;
+        
         StartingInitiation();
+    }
+    private void Start()
+    {
+        growSpeed = VisualEffectHelper.instance.GetColorGrowSpeed(Consts.minSolidValue, minSolidColor, Consts.maxSolidValue, maxSolidColor);
+        SetStaringValues();
     }
 
 
@@ -93,11 +109,6 @@ public class PlayerStats : MonoBehaviour {
         hookRenderer = hookRenderer ?? hook.GetComponent<LineRenderer>();
         hookRigitbody = hookRigitbody ?? hook.GetComponent<Rigidbody2D>();
         hookAimRenderer = hookAimRenderer ?? hookAim.GetComponent<LineRenderer>();
-        SetStaringValues();
-        if (PlayerEffects.instance != null)
-        {
-            PlayerEffects.instance.CheckMass();
-        }
 
     }
     private void SetStaringValues()
@@ -107,6 +118,10 @@ public class PlayerStats : MonoBehaviour {
         MaxDragDistance = startMaxDragDistance;
         CanInteractTime = startcanInteractTime;
         SolidValue = startingSolidValue;
+        if (PlayerEffects.instance != null)
+        {
+            PlayerEffects.instance.CheckMass();
+        }
     }
 
 }

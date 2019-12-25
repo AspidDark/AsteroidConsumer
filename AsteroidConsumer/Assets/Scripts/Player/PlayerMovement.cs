@@ -23,12 +23,15 @@ public class PlayerMovement : MonoBehaviour
     private bool realeaseCanInteract = false;
 
     private bool countAimingLine = false;
+
+    private Camera mainCamera;
     #endregion
 
 
     private void Awake()
     {
         instance = instance ?? this;
+        mainCamera = Camera.main;
     }
 
     
@@ -40,16 +43,21 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        //Deactivation of interaction o small distance
+        //if (Vector3.Distance(mousePos, PlayerStats.instance.hookRigitbody.position) < PlayerStats.instance.minDragDistance)
+        //{
+        //    gameObject.transform.position = PlayerStats.instance.hookRigitbody.position;
+        //    return;
+        //}
         if (isPressed)
         {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
             if (Vector3.Distance(mousePos, PlayerStats.instance.hookRigitbody.position) > PlayerStats.instance.MaxDragDistance)
                 PlayerStats.instance.rb.position = PlayerStats.instance.hookRigitbody.position + (mousePos - PlayerStats.instance.hookRigitbody.position).normalized * PlayerStats.instance.MaxDragDistance;
             else
                 PlayerStats.instance.rb.position = mousePos;
         }
-
         if (realeaseCanInteract)
         {
             line = rendererTool.DrawLine(PlayerStats.instance.hookAimRenderer, PlayerStats.instance.hook.transform.position, gameObject.transform.position, PlayerStats.instance.MaxDragDistance);
