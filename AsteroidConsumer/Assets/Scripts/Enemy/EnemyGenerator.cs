@@ -15,6 +15,7 @@ public class EnemyGenerator : MonoBehaviour
     public EnemyObjectSpawnSettings[] startingEnemyObjectSpawnSettings;
     [SerializeField]
     private GameObject[] staticGameObjects;
+
     public EnemyObjectSpawnSettings[] dynamicEnemyObjectSpawnSettings;
 
     public float fromPlayerToSpawnMax = 15;
@@ -119,7 +120,7 @@ public class EnemyGenerator : MonoBehaviour
             //item.SetActive(true);
             //}
 
-                item.SetActive(!MainCount.instance.IsOutRanged(item.transform, AllObjectData.instance.go.transform, ConstsLibrary.maxObjectDistance));
+                item.SetActive(!MainCount.instance.IsOutRanged(item.transform, AllObjectData.instance.go.transform, Consts.maxObjectDistance));
 
         }
     }

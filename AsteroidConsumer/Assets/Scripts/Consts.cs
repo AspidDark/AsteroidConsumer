@@ -2,6 +2,10 @@
 
 public static class Consts  
 {
+    public const float maxObjectDistance = 200f;
+
+
+
     //mass
     public const float minMass = 0.01f;
     public const float maxMass = 10000;

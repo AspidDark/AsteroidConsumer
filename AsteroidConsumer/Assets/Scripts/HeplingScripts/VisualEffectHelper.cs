@@ -48,29 +48,7 @@ namespace TimB
             CountAllDeltas();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            //#region     //BackGround work
-            //if (!AllObjectData.instance.IsNotFlyinig())
-            //{
-            //    for (int i = 0; i < heightsAndColors.Length; i++)
-            //    {
-            //        if (AllObjectData.instance.posY > heightsAndColors[i].fromHeight
-            //            && AllObjectData.instance.posY <= heightsAndColors[i].toHeight)
-            //        {
-            //            float currentHeightPositionToColor = AllObjectData.instance.posY - heightsAndColors[i].fromHeight;
-            //            byte red = Convert.ToByte(heightsAndColors[i].fromColor.r + growSpeeds[i].redGrow * currentHeightPositionToColor);
-            //            byte green = Convert.ToByte(heightsAndColors[i].fromColor.g + growSpeeds[i].greenGrow * currentHeightPositionToColor);
-            //            byte blue = Convert.ToByte(heightsAndColors[i].fromColor.b + growSpeeds[i].blueGrow * currentHeightPositionToColor);
-            //            byte alpha = Convert.ToByte(heightsAndColors[i].fromColor.a + growSpeeds[i].alphaGrow * currentHeightPositionToColor);
-            //            cam.backgroundColor = new Color32(red, green, blue, alpha);
-            //        }
-            //    }
-            //}
-
-            //#endregion
-        }
+      
         public void ToBaseColor(List<SpriteRenderer> renderer, int id)
         {
             foreach (var item in renderer)
@@ -162,7 +140,7 @@ namespace TimB
         public GrowSpeed GetColorGrowSpeed(float startingValue, Color32 startingColor, float endingValue, Color32 endingColor)
         {
             float delta = endingValue - startingValue;
-            print("delta" + delta);
+           // print("delta" + delta);
             GrowSpeed growSpeed = new GrowSpeed
             {
                 redGrow = (endingColor.r - startingColor.r) / delta,
@@ -170,19 +148,19 @@ namespace TimB
                 blueGrow = (endingColor.b - startingColor.b) / delta,
                 alphaGrow = (endingColor.a - startingColor.a) / delta
             };
-            print("==growSpeed== growSpeed.redGrow=> " + growSpeed.redGrow + " growSpeed.greenGrow=> " + growSpeed.greenGrow+
-                "growSpeed.blueGrow =>" + growSpeed.blueGrow+ " growSpeed.alphaGrow=> " + growSpeed.alphaGrow); 
+         //   print("==growSpeed== growSpeed.redGrow=> " + growSpeed.redGrow + " growSpeed.greenGrow=> " + growSpeed.greenGrow+
+           //     "growSpeed.blueGrow =>" + growSpeed.blueGrow+ " growSpeed.alphaGrow=> " + growSpeed.alphaGrow); 
             return growSpeed;
         }
 
         public Color32 GetFinalColor(Color32 startingColor, GrowSpeed growSpeed, float value)
         {
-            print("startingColor=>" + startingColor+" value "+value);
+          //  print("startingColor=>" + startingColor+" value "+value);
             byte red = Convert.ToByte(startingColor.r + growSpeed.redGrow * value);
             byte green = Convert.ToByte(startingColor.g + growSpeed.greenGrow * value);
             byte blue = Convert.ToByte(startingColor.b + growSpeed.blueGrow * value);
             byte alpha = Convert.ToByte(startingColor.a + growSpeed.alphaGrow * value);
-            print("red "+ red+ " green "+green+" blue "+blue+" alpha "+alpha);
+            //print("red "+ red+ " green "+green+" blue "+blue+" alpha "+alpha);
             return new Color32(red, green, blue, alpha);
         }
     }

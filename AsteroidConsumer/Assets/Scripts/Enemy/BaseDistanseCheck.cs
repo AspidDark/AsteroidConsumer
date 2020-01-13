@@ -15,7 +15,7 @@ public class BaseDistanseCheck  {
     {
         if (/*(Mathf.Abs(_enemyBaseEngine.transform.position.x - AllObjectData.instance.posX) > AllIndependentData.instance.cameraXWidth * 4) ||*/
             MainCount.instance.
-            IsOutRanged(_enemyBaseEngine.transform, AllObjectData.instance.go.transform, ConstsLibrary.maxObjectDistance))
+            IsOutRanged(_enemyBaseEngine.transform, AllObjectData.instance.go.transform, Consts.maxObjectDistance))
         {
             MainCount.instance.TimerEverySecond -= CheckDestroy;
             _enemyBaseEngine.Deactivate();
