@@ -82,7 +82,7 @@ public class EnemyBaseEngine : MonoBehaviour
             stats.solidValue = MainCount.instance.FloatRandom(enemyScriptable.minSolidValue, enemyScriptable.maxSolidValue);
             stats.consumeType = enemyScriptable.consumeType;
             stats.enemyType = EnemyTypeCounter.GetEnemyType(mass, stats.solidValue);
-            stats.isRandomMovement = enemyScriptable.isRandomMpvement;
+            stats.isRandomMovement = enemyScriptable.isRandomMovement;
             ChangeType(stats.enemyType);
 
             enemyMovement.Move(rb2d, stats);
@@ -233,6 +233,25 @@ public class EnemyBaseEngine : MonoBehaviour
             EnemyParametaers parametaers = EnemyParametersLibrary.instance.GetEnemyParametaers(stats.enemyType);
             spriteRenderer.sprite = parametaers.sprite;
             circleCollider.radius = parametaers.colliderRadius;
+            if (parametaers.isChangingColor)
+            {
+                spriteRenderer.color= GetEnemyColorAccordingToPlayerStats();
+            }
         }
+    }
+
+    private Color GetEnemyColorAccordingToPlayerStats()
+    {
+        PlayerInteractionEffect playerInteractionEffect = PlayerInteractionCounter.GerInteractionResult(this);
+        switch (playerInteractionEffect)
+        {
+            case PlayerInteractionEffect.fullConsume:
+             return  Consts.fullConsumableColor;
+            case PlayerInteractionEffect.partialConsume:
+                return Consts.partialConsumableColor;
+            case PlayerInteractionEffect.itConsumesPlayer:
+                return Consts.notConsumableColor;
+        }
+        return Consts.canbeConsumedColor;
     }
 }

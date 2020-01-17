@@ -2,7 +2,7 @@
 
 namespace TimB
 {
-    public class ConstsLibrary
+    public static class ConstsLibrary
     {
 
         public static readonly Color32 proColor = new Color32(255, 255, 255, 255);//Base color

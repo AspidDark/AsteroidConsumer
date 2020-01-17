@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public static class Consts  
 {
@@ -77,11 +78,28 @@ public static class Consts
     public const float bolidMinMass = 100f;
     #endregion
 
+    #region
+    public static readonly Color32 fullConsumableColor = new Color32(6, 169, 0, 255);//green
+    public static readonly Color32 partialConsumableColor = new Color32(0, 87, 223, 255);//blue
+    public static readonly Color32 canbeConsumedColor = new Color32(249, 95, 17, 255);//orange
+    public static readonly Color32 notConsumableColor = new Color32(218, 21, 21, 255);//red
+
+    #endregion
 
     public static readonly float[] mapBodyTypeToMass = { 0, bolidMinMass, meteorMinMass, asteroidMinMass, largeAsteroidMinMass,
     maxMass * cometDecreaser, maxMass * satelliteDecreaser, maxMass *moonDecreaser, maxMass * planetDecreaser, maxMass *(planetDecreaser+starDecreaser)*0.5f,
     maxMass *(planetDecreaser+starDecreaser)*0.75f,  maxMass *starDecreaser,  maxMass * hugeStarMassDesreaser,
     maxMass *(blackHoleCheckDecreaser+hugeStarMassDesreaser)*0.5f, maxMass *blackHoleCheckDecreaser,   maxMass *greatestBodyCheckDecreaser};
+
+
+
+
+    #region Player Effects
+    public const float playerStrongMutipluer = 1.5f;
+    public const float playerAlsoStrongMutipluer = 2f;
+    public const float massiveButNonSolidMass = 8f;
+    public const float massiveButNonSolidSloidValue = 3f;
+    #endregion
 }
 
 public enum SpaceBodyType
@@ -130,6 +148,14 @@ public enum EnemyGenerationType
     ifPlayerIsMoveingEvery05Sec,
     ifPlayerIsMoveingEvery1Sec,
     ifPlayerIsMoveingEvery2Sec,
+}
+
+public enum PlayerInteractionEffect
+{
+    fullConsume,
+    partialConsume,
+    itConsumesPlayer,
+    noEffect
 }
 
 

@@ -19,7 +19,7 @@ public class EnemyScriptable : ScriptableObject
     [Range(Consts.minSpeed, Consts.maxSpeed)]
     public float speedMax;
 
-    public bool isRandomMpvement;
+    public bool isRandomMovement;
 
     [Range(Consts.minConsumePercentage, Consts.maxConsumePercentage)]
     public float minConsumeValue;

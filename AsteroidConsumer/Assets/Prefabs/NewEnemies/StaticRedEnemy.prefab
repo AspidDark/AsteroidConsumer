@@ -110,6 +110,8 @@ MonoBehaviour:
   enemyAttractor: {fileID: 114980379210860284}
   incomeingData: {fileID: 0}
   stats: {fileID: 114910455782164396}
+  spriteRenderer: {fileID: 0}
+  circleCollider: {fileID: 58493534311533126}
 --- !u!114 &114910455782164396
 MonoBehaviour:
   m_ObjectHideFlags: 1

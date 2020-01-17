@@ -17,6 +17,7 @@ MonoBehaviour:
   enemyMassMax: 0.05
   speedMin: 0
   speedMax: 0
+  isRandomMpvement: 0
   minConsumeValue: 0
   maxConsumeValue: 0
   minSolidValue: 7
